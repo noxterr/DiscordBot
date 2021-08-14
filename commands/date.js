@@ -1,0 +1,22 @@
+const request = require('request');
+
+module.exports = {
+    name : 'date',
+    description : 'command that returns some JSON NON FORMATTED stats about time via an API call',
+    execute(message, args){
+        request({
+            url: `https://api.faceit.com/time`,
+            headers: {
+                'Authorization': 'Bearer 01572f53-7fac-4796-9673-04dd54c1f467' //and old bearer c763eb50-c2ed-4874-b63b-8b000979177e
+            },
+            rejectUnauthorized: false
+        }, function(err, res) {
+            if(err) {
+                console.error(err);
+            } else {
+                message.channel.send("Those are non parsed JSON data of time from a FACEIT official API "+res.body)
+            }
+    
+        }); 
+    }    
+}

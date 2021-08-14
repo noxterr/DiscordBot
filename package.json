@@ -1,0 +1,34 @@
+{
+  "name": "discordbot",
+  "version": "1.0.0",
+  "description": "CuriS and noxter's bot for Purple Lambda Discord",
+  "main": "App.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon App.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/noxterr/discord-bot.git"
+  },
+  "keywords": [
+    "bot",
+    "discordbot",
+    "lamba",
+    "lamba-disc",
+    "curi"
+  ],
+  "author": "noxter",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/noxterr/discord-bot/issues"
+  },
+  "homepage": "https://github.com/noxterr/discord-bot#readme",
+  "dependencies": {
+    "discord.js": "^13.0.1",
+    "fs": "^0.0.1-security",
+    "node-fetch": "^2.6.1",
+    "nodemon": "^2.0.12",
+    "request": "^2.88.2"
+  }
+}
