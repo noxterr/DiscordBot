@@ -38,6 +38,17 @@ client.on('messageCreate', message =>{
         message.channel.send('\`CONTENT OF THE MESSAGE\`' + message.author)
     }
     
+    if(command === 'online'){
+        message.channel.send("\`Purple Lambda is ONLINE\`")
+        message.channel.send("\`Good time everyone\`")
+    }
+
+    if(command === 'offline'){
+        message.channel.send("\`Have fun around everyone\`")
+        message.channel.send("\`Purple Lambda is OFFLINE\`")
+    }
+
+
     switch (command){
         case 'noxter':
             message.channel.send("Noxter's gone making cases, sorry");
@@ -56,7 +67,10 @@ client.on('messageCreate', message =>{
         break;
         case 'date':
             client.commands.get(command).execute(message, args)
-            break;          
+            break; 
+        case 'clear':
+            client.commands.get(command).execute(message, args)
+            break;         
         default:
             message.channel.send("\`This is the default response from the bot, when no command is inserted\`")
             break;

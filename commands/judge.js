@@ -2,7 +2,7 @@ const request = require('request');
 
 module.exports = {
     name : 'judge',
-    description : 'command that returns some JSON NON FORMATTED stats about time via an API call',
+    description : 'command that returns some JSON NON FORMATTED stats about justice verdicts',
     execute(message, args){
         request({
             url: `https://api.faceit.com/judge/v1/stats`,
