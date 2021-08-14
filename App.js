@@ -26,14 +26,6 @@ client.on('messageCreate', message =>{
     const args = message.content.slice(prefix.length).split(" ")
     const command = args.shift().toLowerCase()
 
-    if(command === 'commands' || command === 'help'){
-        message.channel.send('Soon I will release a full module with avaible commands in the bot, for now stick to these:\n\`help\`,\n\`commands\`,\n\`thanks\`,\n\`pizza\`,\n\`carbonara\`,\n\`noxter\`,\n\` \`')
-    }
-
-    if(command === 'thanks'){
-        message.channel.send('Yes, thanks \`help\` you big brainer of an Italian pizzaiolo')
-    }
-
     if(command === 'user_id'){
         message.channel.send('\`CONTENT OF THE MESSAGE\`' + message.author)
     }
@@ -50,18 +42,6 @@ client.on('messageCreate', message =>{
 
 
     switch (command){
-        case 'noxter':
-            message.channel.send("Noxter's gone making cases, sorry");
-            break;
-        case 'miches':
-            message.channel.send("Master miches is gone making cases, sorry");
-            break;
-        case 'curis':
-            message.channel.send("CuriS is outside and will try those commands Soon:tm:");
-            break;
-        case 'gone':
-            message.channel.send("noxter is gone sleeping and with this, greets everyone in here as long as wishing a nice sleep. I am also going to sleep. Until next time, Purple Lambda, out ");
-            break;
         case 'judge':          
             client.commands.get(command).execute(message, args)                 
         break;
@@ -70,7 +50,10 @@ client.on('messageCreate', message =>{
             break; 
         case 'clear':
             client.commands.get(command).execute(message, args)
-            break;         
+            break; 
+        case 'help':
+            client.commands.get(command).execute(message, args)
+            break;        
         default:
             message.channel.send("\`This is the default response from the bot, when no command is inserted\`")
             break;

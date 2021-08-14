@@ -13,8 +13,9 @@ module.exports = {
         }, function(err, res) {
             if(err) {
                 console.error(err);
-            } else {
-                message.channel.send("Those are non parsed JSON data of time from a FACEIT official API "+res.body)
+            } else {          
+                let json = JSON.parse(res.body)
+                message.channel.send("\`\`\`\nDate: " + json.payload.date+"\nUnix Time: " +json.payload.unix_time + "\nServer Epoch Time: " +json.server_epoch_time + "\nVersion: " +json.version + "\`\`\`")
             }
     
         }); 
