@@ -69,5 +69,6 @@ function gotMessage(msg) {
         msg.reply('🚂🌈💖');
     }
   }
-
-client.login();
+ 
+// LAMBDA-TOKEN
+client.login(process.env.LAMBDA_TOKEN);
