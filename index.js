@@ -70,4 +70,4 @@ function gotMessage(msg) {
     }
   }
 
-client.login(');
+client.login();
