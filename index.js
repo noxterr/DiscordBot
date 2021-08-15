@@ -70,4 +70,4 @@ function gotMessage(msg) {
     }
   }
 
-client.login('ODc1NDcyMjMyOTI5OTcyMzg0.YRWBDQ.z1GJpLAw8c6ZQklbDIjDlK0iBZs');
+client.login();
