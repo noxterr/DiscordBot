@@ -3,13 +3,9 @@ const { Client, Intents } = require('discord.js');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 const request = require('request');
 const prefix = '-'
-//process.env.PORT || 1337
 
 const fs = require('fs');
 client.commands = new Discord.Collection();
-
-
-//app.set("port" , port)
 
 
 const commandFile = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'))
