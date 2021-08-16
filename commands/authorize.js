@@ -15,10 +15,10 @@ module.exports = {
 
 
         var con = mysql.createConnection({
-            host: "localhost",
-            user: "root",
-            password: "",
-            database: 'purple-lambda'
+            host: process.env.ACCESS_DB_IP,     //ACCESS_DB_IP
+            user: process.env.ACCESS_DB_USER,   //ACCESS_DB_USER
+            password: process.env.ACCESS_DB_PASSWORD,   //ACCESS_DB_PASSWORD
+            database: process.env.ACCESS_DB_TABLE   //ACCESS_DB_TABLE
         });
 
         let sql = "SELECT * FROM cha_auth"
