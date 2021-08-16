@@ -31,12 +31,12 @@ client.on('messageCreate', message =>{
     }
     
     if(command === 'online'){
-        message.channel.send("\`Purple Lambda is ONLINE\`")
+        message.channel.send("\`Local Purple Lambda is ONLINE\`")
         message.channel.send("\`Good time everyone\`")
     }
 
     if(command === 'offline'){
-        message.channel.send("\`Have fun around everyone\`")
+        message.channel.send("\`Local Have fun around everyone\`")
         message.channel.send("\`Purple Lambda is OFFLINE\`")
     }
 
@@ -53,10 +53,16 @@ client.on('messageCreate', message =>{
             break; 
         case 'help':
             client.commands.get(command).execute(message, args)
-            break;        
-        default:
-            message.channel.send("\`This is the default response from the bot, when no command is inserted\`")
+            break;             
+        case 'query':
+            client.commands.get(command).execute(message, args)
             break;
+        case 'authlink':
+            client.commands.get(command).execute(message, args)
+            break;
+        case 'authorize':
+            client.commands.get(command).execute(message, args)
+            break;  
     }
     
 })
@@ -71,4 +77,4 @@ function gotMessage(msg) {
   }
  
 // LAMBDA-TOKEN
-client.login(process.env.LAMBDA_TOKEN);
+client.login("ODc1NDcyMjMyOTI5OTcyMzg0.YRWBDQ.nNdu9xuISRoo9YfPc23megM00SM");
