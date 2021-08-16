@@ -77,4 +77,4 @@ function gotMessage(msg) {
   }
  
 // LAMBDA-TOKEN
-client.login("ODc1NDcyMjMyOTI5OTcyMzg0.YRWBDQ.nNdu9xuISRoo9YfPc23megM00SM");
+client.login(process.env.LAMBDA_TOKEN);
