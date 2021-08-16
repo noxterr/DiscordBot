@@ -11,7 +11,8 @@ module.exports = {
             host: process.env.ACCESS_DB_IP,     //ACCESS_DB_IP
             user: process.env.ACCESS_DB_USER,   //ACCESS_DB_USER
             password: process.env.ACCESS_DB_PASSWORD,   //ACCESS_DB_PASSWORD
-            database: process.env.ACCESS_DB_TABLE   //ACCESS_DB_TABLE
+            database: process.env.ACCESS_DB_TABLE   ,   //ACCESS_DB_TABLE
+            port: process.env.ACCESS_DB_PORT //ACCESS_DB_PORT
         });
 
 
