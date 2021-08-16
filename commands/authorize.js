@@ -23,26 +23,30 @@ module.exports = {
 
         let sql = "SELECT * FROM cha_auth"
         con.connect(function(err) {
-            if (err) throw err;
-            console.log("Connected!");
-            con.query(sql, function (err, result) {
-                if (err){
-                    message.channel.send("\`Issues with the DB, please check logs\`")
-                    console.log(err)
-                }else{
-                    let data = ""
-                    Object.keys(result).forEach(function(key) {
-                        var row = result[key];
-                        data += row.token_auth
+            if (err){
+                message.channel.send("\`Issues with the DB, please check logs\`")
+                console.log(err)
+            }else{
+                console.log("Connected!");
+                con.query(sql, function (err, result) {
+                    if (err){
+                        message.channel.send("\`Issues with the query, please check logs\`")
+                        console.log(err)
+                    }else{
+                        let data = ""
+                        Object.keys(result).forEach(function(key) {
+                            var row = result[key];
+                            data += row.token_auth
 
-                        if(row.token_auth == args[0]){
-                            message.channel.send("\`Authorized\`")
-                        }else{
-                            message.channel.send("\`NOT Authorized, you suck balls\`")
-                        }
-                    });
-                }             
-            });
+                            if(row.token_auth == args[0]){
+                                message.channel.send("\`Authorized\`")
+                            }else{
+                                message.channel.send("\`NOT Authorized, you suck balls\`")
+                            }
+                        });
+                    }             
+                });
+            }
         }); 
     }
 }
