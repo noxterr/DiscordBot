@@ -8,13 +8,6 @@ module.exports = {
 
 
         //let userCB = Buffer.from(user, 'ascii').toString('base64')
-
-
-        let userCB = Buffer.from(user, 'ascii').toString('base64')
-
-        console.log(userCB)
-
-
         //console.log(userCB)
 
         message.channel.send("Link to authorize with faceit :" + `https://faceit-oauth.herokuapp.com/?p=${user}`)
