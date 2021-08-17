@@ -5,15 +5,15 @@ module.exports = {
 
         let user = message.author.id
         console.log(message.author.id)
-<<<<<<< HEAD
+
 
         //let userCB = Buffer.from(user, 'ascii').toString('base64')
-=======
+
 
         let userCB = Buffer.from(user, 'ascii').toString('base64')
 
         console.log(userCB)
->>>>>>> f8175dd07a4723039d18151fbac8e1ec45c64478
+
 
         //console.log(userCB)
 
