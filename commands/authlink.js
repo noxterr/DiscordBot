@@ -3,8 +3,8 @@ module.exports = {
     description : 'command that sends a link',
     execute(message, args){
 
-        let user = message.author
-        console.log(message.author)
+        let user = message.author.id
+        console.log(message.author.id)
 
         let userCB = user.toString('base64');
         console.log(userCB)
