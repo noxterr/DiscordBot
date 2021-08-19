@@ -81,4 +81,4 @@ function gotMessage(msg) {
   }
  
 // LAMBDA-TOKEN
-client.login('ODc1NDcyMjMyOTI5OTcyMzg0.YRWBDQ.bkA0x3h67-iKcmL2BscMbSA6IyQ');
+client.login(process.env.LAMBDA_TOKEN);
