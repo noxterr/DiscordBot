@@ -2,9 +2,11 @@ const mongoose = require('mongoose');
 var Player = require('./player_schema.js');
 
 module.exports = {
-    name: 'authorize',
+    name: 'auth',
     description: 'command that returns some JSON NON FORMATTED stats about justice verdicts',
     execute(message, args) {
+
+        
         //checks if there is an argument - NEEDED
         if (!args[0]) return message.reply("Please put the authorization string token ")
 
@@ -13,7 +15,6 @@ module.exports = {
 
         //checks if the argument is less than 0 - CANNOT BE < 0
         if (args[0] <= 0) return message.reply("Please put a valid token")
-
 
         //I will get the user ID now
         let user_id = message.author.id
@@ -47,28 +48,21 @@ module.exports = {
 
                     if(doc.token_auth === input_id){
                         //player auth
-                        console.log('player auth')
+                        message.author.send("You are authenticated in Purple Lambda")
 
                         //HERE WE GIVE THE ROLE     Verified
 
                         const { guild } = message
-
-                        const targetUser = message.mentions.users.first()
-                        console.log("targetUser "+ targetUser + " user_id " + user_id)
-
+           
                         const member = guild.members.cache.get(user_id)
 
                         var role = message.guild.roles.cache.find(role => role.name === "Verified");
-                        console.log(role);
 
                         member.roles.add(role)
 
-                        console.log(member)
-
-                        message.reply("player auth")
+                        
                     }else{
-                        console.log('auth failed')
-                        message.reply("The authentication has failed. This is probably because you inserted a wrong number. If the problem persists you can ask Support")
+                        message.author.send("The authentication has failed. This is probably because you inserted a wrong number. If the problem persists you can ask Support")
                     }
                 
             })();
@@ -77,6 +71,7 @@ module.exports = {
             console.log('Eventually res.end')
             var stop = (new Date()).getTime();
             console.log('Took this long: ', (stop - start) / 1000);
+            
 
             setTimeout(() => {
                 mongoose.connection.close()

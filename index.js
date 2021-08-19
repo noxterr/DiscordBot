@@ -1,7 +1,6 @@
 const Discord = require('discord.js');
 const { Client, Intents } = require('discord.js');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
-const request = require('request');
 const prefix = '-'
 const fs = require('fs');
 client.commands = new Discord.Collection();
@@ -60,7 +59,8 @@ client.on('messageCreate', message =>{
         case 'authlink':
             client.commands.get(command).execute(message, args)
             break;
-        case 'authorize':
+        case 'auth':
+            setTimeout(() => message.delete(), 1500)
             client.commands.get(command).execute(message, args)
             break;  
         case 'support':
@@ -81,4 +81,4 @@ function gotMessage(msg) {
   }
  
 // LAMBDA-TOKEN
-client.login('ODc1NDcyMjMyOTI5OTcyMzg0.YRWBDQ.bkA0x3h67-iKcmL2BscMbSA6IyQ');
+client.login(process.env.LAMBDA_TOKEN); //prima di pushare process.env.LAMBDA_TOKEN

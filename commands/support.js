@@ -12,16 +12,12 @@ module.exports = {
 
         const { guild } = message
 
-        const targetUser = message.mentions.users.first()
-        console.log("targetUser "+ targetUser + " user_id " + user_id)
-
         const member = guild.members.cache.get(user_id)
 
         var role = message.guild.roles.cache.find(role => role.name === "Support needed");
-        console.log(role);
-
         member.roles.add(role)
 
+        setTimeout(() => message.delete(), 1500)
         
         return supportRequest
     }
