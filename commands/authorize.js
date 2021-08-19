@@ -1,53 +1,89 @@
-var mysql = require('mysql');
+const mongoose = require('mongoose');
+var Player = require('./player_schema.js');
 
 module.exports = {
-    name : 'authorize',
-    description : 'command that returns some JSON NON FORMATTED stats about justice verdicts',
-    execute(message, args){
+    name: 'authorize',
+    description: 'command that returns some JSON NON FORMATTED stats about justice verdicts',
+    execute(message, args) {
         //checks if there is an argument - NEEDED
-        if(!args[0]) return message.reply("Please put the authorization string token ")
+        if (!args[0]) return message.reply("Please put the authorization string token ")
 
         //checks if the argument is greater than 25 - CANNOT BE > 25
-        if(args[0].length != 12) return message.reply("Please put a valid of valid measure")
+        if (args[0].length != 12) return message.reply("Please put a valid of valid measure")
 
         //checks if the argument is less than 0 - CANNOT BE < 0
-        if(args[0] <= 0 ) return message.reply("Please put a valid token")
+        if (args[0] <= 0) return message.reply("Please put a valid token")
 
 
-        var con = mysql.createConnection({
-            host: process.env.ACCESS_DB_IP,     //ACCESS_DB_IP
-            user: process.env.ACCESS_DB_USER,   //ACCESS_DB_USER
-            password: process.env.ACCESS_DB_PASSWORD,   //ACCESS_DB_PASSWORD
-            database: process.env.ACCESS_DB_TABLE,   //ACCESS_DB_TABLE
-            port: process.env.ACCESS_DB_PORT //ACCESS_DB_PORT
+        //I will get the user ID now
+        let user_id = message.author.id
+        let input_id = " "+args[0]
+
+        //opening DB
+        console.log("I WILL TRY CONNECTING NOW")
+
+        var start = (new Date()).getTime();
+        mongoose.connect('mongodb+srv://noxter:ZapataDuvan72@cluster1.j7mnp.mongodb.net/purple-lambda?retryWrites=true&w=majority', {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
         });
 
-        let sql = "SELECT * FROM cha_auth"
-        con.connect(function(err) {
-            if (err){
-                message.channel.send("\`Issues with the DB, please check logs\`")
-                console.log(err)
-            }else{
-                console.log("Connected!");
-                con.query(sql, function (err, result) {
-                    if (err){
-                        message.channel.send("\`Issues with the query, please check logs\`")
-                        console.log(err)
-                    }else{
-                        let data = ""
-                        Object.keys(result).forEach(function(key) {
-                            var row = result[key];
-                            data += row.token_auth
+        //if the DB is open, I will tell ya
+        mongoose.connection.once('open', function () {
 
-                            if(row.token_auth == args[0]){
-                                message.channel.send("\`Authorized\`")
-                            }else{
-                                message.channel.send("\`NOT Authorized, you suck balls\`")
-                            }
-                        });
-                    }             
-                });
-            }
-        }); 
+            console.log('Open & Connected!');
+
+            //I will put the player on the search of the discord id aka discord_token
+
+            (async () => {
+                const filter = { discord_id: user_id };
+
+
+                    console.log("a payer was found and modifications were made")
+
+                    doc = await Player.findOne(filter);
+           
+                    console.log('before if:' + doc.token_auth + " and" + input_id)
+
+                    if(doc.token_auth === input_id){
+                        //player auth
+                        console.log('player auth')
+
+                        //HERE WE GIVE THE ROLE     Verified
+
+                        const { guild } = message
+
+                        const targetUser = message.mentions.users.first()
+                        console.log("targetUser "+ targetUser + " user_id " + user_id)
+
+                        const member = guild.members.cache.get(user_id)
+
+                        var role = message.guild.roles.cache.find(role => role.name === "Verified");
+                        console.log(role);
+
+                        member.roles.add(role)
+
+                        console.log(member)
+
+                        message.reply("player auth")
+                    }else{
+                        console.log('auth failed')
+                        message.reply("The authentication has failed. This is probably because you inserted a wrong number. If the problem persists you can ask Support")
+                    }
+                
+            })();
+            console.log('Asynchronous this')
+
+            console.log('Eventually res.end')
+            var stop = (new Date()).getTime();
+            console.log('Took this long: ', (stop - start) / 1000);
+
+            setTimeout(() => {
+                mongoose.connection.close()
+            }, 1500)
+
+        }).on('error', function (error) {
+            console.log("Err:\n" + error)
+        })
     }
 }

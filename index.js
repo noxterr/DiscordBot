@@ -63,6 +63,10 @@ client.on('messageCreate', message =>{
         case 'authorize':
             client.commands.get(command).execute(message, args)
             break;  
+        case 'support':
+            client.channels.cache.get('877980154910081075').send(client.commands.get(command).execute(message, args))
+            break;
+            
     }
     
 })
@@ -77,4 +81,4 @@ function gotMessage(msg) {
   }
  
 // LAMBDA-TOKEN
-client.login(process.env.LAMBDA_TOKEN);
+client.login('ODc1NDcyMjMyOTI5OTcyMzg0.YRWBDQ.bkA0x3h67-iKcmL2BscMbSA6IyQ');
