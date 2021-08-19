@@ -81,8 +81,5 @@ function gotMessage(msg) {
   }
  
 // LAMBDA-TOKEN
-<<<<<<< HEAD
-client.login(process.env.LAMBDA_TOKEN); //prima di pushare process.env.LAMBDA_TOKEN
-=======
 client.login(process.env.LAMBDA_TOKEN);
->>>>>>> 842a9002906b8239dddd77538f876dd8275c9ae7
+
