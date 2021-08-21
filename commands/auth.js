@@ -8,17 +8,18 @@ module.exports = {
 
         
         //checks if there is an argument - NEEDED
-        if (!args[0]) return message.reply("Please put the authorization string token ")
+        if (!args[0]) return message.author.send("Please put the authorization string token ")
 
         //checks if the argument is greater than 25 - CANNOT BE > 25
-        if (args[0].length != 12) return message.reply("Please put a valid of valid measure")
+        if (args[0].length != 12) return message.author.send("Please put a valid of valid measure")
 
         //checks if the argument is less than 0 - CANNOT BE < 0
-        if (args[0] <= 0) return message.reply("Please put a valid token")
+        if (args[0] <= 0) return message.author.send("Please put a valid token")
 
-        //I will get the user ID now
-        let user_id = message.author.id
-        let input_id = " "+args[0]
+        //I will set up some environment variables to use later
+        let user_id = message.author.id;
+        let input_id = args[0];
+        let level = 'Level';
 
         //opening DB
         console.log("I WILL TRY CONNECTING NOW")
@@ -46,29 +47,59 @@ module.exports = {
            
                     console.log('before if:' + doc.token_auth + " and" + input_id)
 
-                    if(doc.token_auth === input_id){
+                    console.log("doc = ")
+                    console.log(doc)
+
+                    console.log("player lvl : "+doc.skill_level + " player elo : "+doc.player_elo + " steam64 : "+doc.steam_64)
+
+                    console.log(doc.token_auth + " and " + input_id +" ");
+                    
+                    
+                    console.log(doc.token_auth == input_id);
+
+                    //if the DB token is correct and coincides with the input from the player
+                    if(doc.token_auth == input_id){
                         //player auth
                         message.author.send("You are authenticated in Purple Lambda")
 
-                        //HERE WE GIVE THE ROLE     Verified
+                        //HERE WE GIVE ROLES     
 
                         const { guild } = message
            
+                        //I get the member to add the verified + level + (premium ? nothing) 
                         const member = guild.members.cache.get(user_id)
 
-                        var role = message.guild.roles.cache.find(role => role.name === "Verified");
+                        //getting from guild verified and level role
+                        var verifiedRole = message.guild.roles.cache.find(role => role.name === "Verified");
+                        var levelRole = message.guild.roles.cache.find(role => role.name === level+" "+doc.skill_level);
 
-                        member.roles.add(role)
+                        //if the player has more than 2.4k elo, he will be given only 2.4k elo role
+                        if(doc.player_elo > 2401){
+                            var masterEloRole = message.guild.roles.cache.find(role => role.name === "2400+");
+                            member.roles.add(masterEloRole)
+                        }else{
+                            //if not, the player will be given any rank, based on his
+                            member.roles.add(levelRole)
+                        }
 
+                        //add verified - for sure added
+                        member.roles.add(verifiedRole)
+
+                        if (doc.membership ) { //if there is a membership
+                            console.log('there is a sub')
+                            if(doc.membership == 'csgo' || doc.membership == 'premium'){ //if the membership is any subscription, allowed to play in premium queues
+                                console.log('the sub is ' +doc.membership)
+                                var premiumRole = message.guild.roles.cache.find(role => role.name === "Premium");
+                                member.roles.add(premiumRole)
+                            }
+                        }
+                        console.log('no sub')
+                        
                         
                     }else{
                         message.author.send("The authentication has failed. This is probably because you inserted a wrong number. If the problem persists you can ask Support")
-                    }
-                
+                    }          
             })();
-            console.log('Asynchronous this')
-
-            console.log('Eventually res.end')
             var stop = (new Date()).getTime();
             console.log('Took this long: ', (stop - start) / 1000);
             

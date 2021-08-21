@@ -8,7 +8,10 @@ const player_data = new Schema({
     membership: String,
     locale: String,
     auth_id: String,
-    token_auth: String
+    token_auth: String,
+    player_elo : String,
+    skill_level : String,
+    steam_64 : String
 });
 
 module.exports = mongoose.model('player-data', player_data);     
