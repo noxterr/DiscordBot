@@ -147,9 +147,6 @@ client.on('messageCreate', message =>{
         }
     }  
 })
-
-client.on('messageCreate', gotMessage);
-
  
 // LAMBDA-TOKEN
 client.login(process.env.LAMBDA_TOKEN); //process.env.LAMBDA_TOKEN
