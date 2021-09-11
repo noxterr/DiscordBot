@@ -11,7 +11,7 @@ module.exports = {
         let dateCmd =  "\n-date       -> This command will return a JSON of the actual time, and other infos about faceit API."
         let judgeCmd = "\n-judge [n]  -> This command will return a JSON of the actual Justice Count Live if no arguments are passed. Passing a name will return the actual count of cases of that player."
         let clearCmd = "\n-clear [n]  -> This command will clear n messages in a channel in a range 1-25, within the last 14 days."
-        let authorizeCmd = "\n-auth <d>   -> This command will authorize players, d is the data passed in this format <player_id:token>.🔜"
+        let authorizeCmd = "\n-auth <t>   -> This command will authorize players, t is the data passed in this format -auth t. (t is the token)"
 
 
         messageStringEnd = "\`\`\`";

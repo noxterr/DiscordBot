@@ -36,14 +36,18 @@ client.once('ready' , () =>{
                             fetch('https://www.faceitstatus.com/api/v2/status.json')
                                 .then(responseFaceit => responseFaceit.json())
                                 .then(jsonFaceit =>{
-                                    embedObject += `{"heroku":[{"app_status" : "${jsonHeroku.status[0].status}"}, {"data_status" : "${jsonHeroku.status[1].status}"}], "faceit_status" : "${jsonFaceit.status.description}" , "faceit_status_url" : "${jsonFaceit.page.url}"}`
+                                    fetch('https://api.steampowered.com/ICSGOServers_730/GetGameServersStatus/v1/?appid=440&key=CEFE5FC1E26B180DCF064C6AC06C5433')
+                                    .then(responseFaceit => responseFaceit.json())
+                                    .then(jsonSteam =>{
+                                        embedObject += `{"heroku":[{"app_status" : "${jsonHeroku.status[0].status}"}, {"data_status" : "${jsonHeroku.status[1].status}"}], "faceit_status" : "${jsonFaceit.status.description}" , "faceit_status_url" : "${jsonFaceit.page.url}", "steam_status" : "${jsonSteam.result.services.SessionsLogon}"}`
+                                    })  
                                 })             
                         })   
 
                     setTimeout(()=>{
 
                         embedObject = JSON.parse(embedObject)
-
+                        console.log(embedObject)
 
                         const exampleEmbed = new MessageEmbed()
                             .setColor('#0099ff')
@@ -53,11 +57,12 @@ client.once('ready' , () =>{
                             .setDescription('Operation Status of Providers')
                             //.setThumbnail('https://i.imgur.com/AfFp7pu.png')
                             .addFields(
-                                { name: 'Heroku App Stats', value: (embedObject.heroku[0].app_status == 'green' ? '✅' : '❌'), inline: true  },
-                                { name: 'Heroku Data Status', value: (embedObject.heroku[1].data_status == 'green' ? '✅' : '❌'), inline: true},
+                                { name: 'App Stats', value: (embedObject.heroku[0].app_status == 'green' ? '✅' : '❌'), inline: true  },
+                                { name: 'Data Status', value: (embedObject.heroku[1].data_status == 'green' ? '✅' : '❌'), inline: true},
                                 /* { name: '\u200B', value: '\u200B' },*/
                                 { name: 'Faceit Stats', value: `[${embedObject.faceit_status}](${embedObject.faceit_status_url})`, inline: false },
-                            )
+                                { name: 'Steam Session Status', value: (embedObject.steam_status == 'normal' ? '✅' : '❌'), inline: false },
+                            ) 
                             /*.addField('Inline field title', 'Some value here', true)*/
                             .setTimestamp()
                             .setFooter('Last update was:', purpleLambdaBotImg); 
@@ -72,7 +77,7 @@ client.once('ready' , () =>{
     
     setInterval(() => {
         edit();
-    }, 3600000) // 60 minutes = 3600 seconds = 3600000 ms
+    }, 3600000) // 60 minutes = 3600 seconds = 3600000 ms 
     
 
     console.log('purple lambda is on and run');
@@ -96,26 +101,37 @@ client.on('messageCreate', message =>{
         leverage = 3
     }
 
-    console.log("level: " + leverage)
+    //console.log(client)
+
+    
+
+    if(args[0] != null){
+        client.channels.cache.get('885199141037305916').send("\`-"+command + " " + args[0] + "\` has been typed into a channel from " + `<@${message.member.user.id}>`)
+    }else{
+        client.channels.cache.get('885199141037305916').send("\`-"+command + "\` has been typed into a channel from " + `<@${message.member.user.id}>`)
+    }
 
     if(leverage >= 1){ //anything else
-        console.log('admin + mod + everyone')
+        //console.log('admin + mod + everyone')
         switch (command){
             case 'support':
+                //client.channels.cache.get('885199141037305916')
                 client.channels.cache.get('877980154910081075').send(client.commands.get(command).execute(message, args))
                 break;
             case 'authlink':
+                //client.channels.cache.get('885199141037305916')
                 client.commands.get(command).execute(message, args)
                 break;
             case 'auth':
-                setTimeout(() => message.delete(), 1250)
+                //client.channels.cache.get('885199141037305916')
+                //setTimeout(() => message.delete(), 1250)
                 client.commands.get(command).execute(message, args)            
                 break;
         }
     }   
     
     if(leverage >= 3){ //moderator level
-        console.log('admin + mod')
+        //console.log('admin + mod')
         switch (command){
             case 'close_support':
                 client.commands.get(command).execute(message, args)
@@ -130,7 +146,7 @@ client.on('messageCreate', message =>{
     }
 
     if(leverage >= 5){ //admin level
-        console.log('admin only')
+        //console.log('admin only')
         switch (command){
             case 'judge':          
                 client.commands.get(command).execute(message, args)                 
