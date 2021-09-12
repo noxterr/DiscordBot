@@ -24,7 +24,7 @@ module.exports = {
         console.log("I WILL TRY CONNECTING NOW")
 
         var start = (new Date()).getTime();
-        mongoose.connect('mongodb+srv://noxter:ZapataDuvan72@cluster1.j7mnp.mongodb.net/purple-lambda?retryWrites=true&w=majority', {
+        mongoose.connect(`mongodb+srv://${process.env.MONGO_DB_CREDS}@cluster1.j7mnp.mongodb.net/purple-lambda?retryWrites=true&w=majority`, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
