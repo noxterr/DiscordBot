@@ -26,7 +26,7 @@ module.exports = {
 
         //opening DB
         console.log("I WILL TRY CONNECTING NOW")
-        mongoose.connect('mongodb+srv://noxter:ZapataDuvan72@cluster1.j7mnp.mongodb.net/purple-lambda?retryWrites=true&w=majority', {
+        mongoose.connect(`mongodb+srv://${process.env.MONGO_DB_CREDS}@cluster1.j7mnp.mongodb.net/purple-lambda?retryWrites=true&w=majority`, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
@@ -72,7 +72,7 @@ module.exports = {
                     //here we check if the player is in the HUB
                     request({
                         url: `https://open.faceit.com/data/v4/players?nickname=${doc.nickname}`,
-                        headers: {'Authorization': 'Bearer c763eb50-c2ed-4874-b63b-8b000979177e'},
+                        headers: {'Authorization': `Bearer ${process.env.API_BEARER_KEY}`},
                         rejectUnauthorized: false
                     }, function(err, res) {
                         if(err) {
@@ -83,7 +83,7 @@ module.exports = {
                         
                             request({
                                 url: `https://open.faceit.com/data/v4/hubs/b455f6bf-1648-4a1f-a615-fc31c0814315/members?offset=0&limit=100`,
-                                headers: {'Authorization': 'Bearer c763eb50-c2ed-4874-b63b-8b000979177e'},
+                                headers: {'Authorization': `Bearer ${process.env.API_BEARER_KEY}`},
                                 rejectUnauthorized: false
                             }, function(errHub, resHub) {
                                 if(errHub) {

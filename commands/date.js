@@ -7,7 +7,7 @@ module.exports = {
         request({
             url: `https://api.faceit.com/time`,
             headers: {
-                'Authorization': 'Bearer 01572f53-7fac-4796-9673-04dd54c1f467' //and old bearer c763eb50-c2ed-4874-b63b-8b000979177e
+                'Authorization': `Bearer ${process.env.JUSTICE_BEARER_KEY}` //and old bearer c763eb50-c2ed-4874-b63b-8b000979177e
             },
             rejectUnauthorized: false
         }, function(err, res) {
