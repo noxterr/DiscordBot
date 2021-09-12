@@ -159,10 +159,23 @@ client.on('messageCreate', message =>{
                 break; 
             case 'help':
                 client.commands.get(command).execute(message, args)
+                break;   
+            case 'hubplayer':
+                client.commands.get(command).execute(message, args)
                 break;          
         }
     }  
+
+    
 })
- 
+
+client.on('messageCreate', gotMessage);
+    
+function gotMessage(msg) {
+    if (msg.content === 'I am amazing') {
+        msg.reply('You are💖');
+    }
+}
+
 // LAMBDA-TOKEN
 client.login(process.env.LAMBDA_TOKEN); //process.env.LAMBDA_TOKEN
