@@ -17,6 +17,8 @@ module.exports = {
                 useNewUrlParser: true,
                 useUnifiedTopology: true
             });
+            
+            let connected = true
 
             mongoose.connection.once('open', function() {
                 console.log('Connected!');
