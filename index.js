@@ -162,7 +162,10 @@ client.on('messageCreate', message =>{
                 break;   
             case 'hubplayer':
                 client.commands.get(command).execute(message, args)
-                break;          
+                break;    
+            case 'todo':
+                client.commands.get(command).execute(message, args)
+                break;
         }
     }  
 
