@@ -13,7 +13,7 @@ module.exports = {
         }
 
         if (args.length == 1) {
-            mongoose.connect(`mongodb+srv://noxter:ZapataDuvan72@cluster1.j7mnp.mongodb.net/purple-lambda?retryWrites=true&w=majority`, {
+            mongoose.connect(`mongodb+srv://${process.env.MONGO_DB_CREDS}@cluster1.j7mnp.mongodb.net/purple-lambda?retryWrites=true&w=majority`, {
                 useNewUrlParser: true,
                 useUnifiedTopology: true
             });
@@ -79,7 +79,7 @@ module.exports = {
             let user_name = message.author.username
             console.log("username: " + user_name)
             console.log(message.author)
-            mongoose.connect(`mongodb+srv://noxter:ZapataDuvan72@cluster1.j7mnp.mongodb.net/purple-lambda?retryWrites=true&w=majority`, {
+            mongoose.connect(`mongodb+srv://${process.env.MONGO_DB_CREDS}@cluster1.j7mnp.mongodb.net/purple-lambda?retryWrites=true&w=majority`, {
                 useNewUrlParser: true,
                 useUnifiedTopology: true
             });

@@ -166,6 +166,9 @@ client.on('messageCreate', message =>{
             case 'todo':
                 client.commands.get(command).execute(message, args)
                 break;
+            case 'update':
+                client.commands.get(command).execute(message, args)
+                break
         }
     }  
 
@@ -175,8 +178,19 @@ client.on('messageCreate', message =>{
 client.on('messageCreate', gotMessage);
     
 function gotMessage(msg) {
-    if (msg.content === 'I am amazing') {
-        msg.reply('You are💖');
+    switch(msg.content){
+        case 'I am amazing':
+            msg.reply('You are💖');
+            break;
+        case 'me good':
+            msg.reply(':pog:');
+            break;
+        case 'me bad':
+            msg.reply(':crycat:');
+            break;
+        case 'I did it':
+            msg.reply(':poggers: ');
+            break;
     }
 }
 
