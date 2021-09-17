@@ -29,9 +29,10 @@ module.exports = {
                             console.log(err);
                         } else {
                             if (data && data.length != 0) {
-                                message.reply("your todo has number " + args[0] + " and exists");
+                                console.log(data[0].todo);
+                                message.author.send("Todo has number " + data[0].todo_id + ", added from "+data[0].author + " and has this objective: \'" +data[0].todo +"\`");
                             } else {
-                                message.reply("your asked todo does not and exists, free to create a new one");
+                                message.author.send("your asked todo does not and exists, free to create a new one");
                             }
                         }
                     });

@@ -183,13 +183,16 @@ function gotMessage(msg) {
             msg.reply('You are💖');
             break;
         case 'me good':
-            msg.reply(':pog:');
+            const ayy = client.emojis.cache.find(emoji => emoji.name === "pog");
+            msg.reply(`${ayy}`);
             break;
         case 'me bad':
-            msg.reply(':crycat:');
+            const crycat = client.emojis.cache.find(emoji => emoji.name === "crycat");
+            msg.reply(`${crycat}`);
             break;
         case 'I did it':
-            msg.reply(':poggers: ');
+            const poggers = client.emojis.cache.find(emoji => emoji.name === "poggers");
+            msg.reply(`${poggers}`);
             break;
     }
 }
