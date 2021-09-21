@@ -106,9 +106,9 @@ client.on('messageCreate', message =>{
     
 
     if(args[0] != null){
-        client.channels.cache.get('885199141037305916').send("\`-"+command + " " + args[0] + "\` has been typed into a channel from " + `<@${message.member.user.id}>`)
+        client.channels.cache.get('885199141037305916').send("\`-"+command + " " + args[0] + "\` has been typed into a channel from `" + `${message.member.user.username}`+"`") // need to tag on logs? `<@${message.member.user.id}>`
     }else{
-        client.channels.cache.get('885199141037305916').send("\`-"+command + "\` has been typed into a channel from " + `<@${message.member.user.id}>`)
+        client.channels.cache.get('885199141037305916').send("\`-"+command + "\` has been typed into a channel from `" + `${message.member.user.username}` +"`")// need to tag on logs? `<@${message.member.user.id}>`
     }
 
     if(leverage >= 1){ //anything else
@@ -169,6 +169,9 @@ client.on('messageCreate', message =>{
             case 'update':
                 client.commands.get(command).execute(message, args)
                 break
+            case 'judgeontime':
+                client.commands.get(command).execute(message, args)
+                break
         }
     }  
 
@@ -180,6 +183,10 @@ client.on('messageCreate', gotMessage);
 function gotMessage(msg) {
     switch(msg.content){
         case 'I am amazing':
+        case 'I am huge':
+        case 'I am a god':
+        case 'I am professional':
+        case 'I am insane':
             msg.reply('You are💖');
             break;
         case 'me good':
