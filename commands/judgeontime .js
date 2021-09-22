@@ -20,6 +20,7 @@ module.exports = {
         */
 
         let judges = []
+        let tte = 0
 
         //control for nicknames validation
         if(args[0].split("")[9] == '(' && args[0].split("")[args[0].split("").length - 1] == ')'){
@@ -27,12 +28,52 @@ module.exports = {
 
             let split = args[0].split("nicknames")[1].replace(/[()]+/g,"")
 
-            console.log(split)
-
+            
             for (let i = 0; i < split.split(';').length; i++) {
                 judges.push(split.split(';')[i])                
             }
+            console.log(judges)
         }
+
+        if(args[1].split('-')[1].length == 8){
+            console.log(args[1])
+            let date = args[1].split('-')[0]
+            let time = args[1].split('-')[1]
+
+            let todayDate = new Date();
+            let todayDay = todayDate.getDate()
+            let todayMonth = (todayDate.getMonth() + 1 )
+            let todayYear = todayDate.getFullYear()
+            let todayHour = todayDate.getHours()
+            let todayMinutes = todayDate.getMinutes()
+            let todaySeconds = todayDate.getSeconds()
+
+            console.log("date is: "+ todayDay + " " + todayMonth +" " + todayYear + " " +todayHour +" " + todayMinutes +" " + todaySeconds)
+
+            let futureDay = date.split('/')[0]
+            let futureMonth = date.split('/')[1]
+            let futureYear = date.split('/')[2]
+            let futureHour = time.split(':')[0]
+            let futureMinutes = time.split(':')[1]
+            let futureSeconds = time.split(':')[2]
+
+            console.log("future date is: " +" " + futureDay +" " + futureMonth + " " +futureYear + " " +futureHour +" " + futureMinutes +" " +futureSeconds)
+
+            if(futureDay - todayDay == 0){
+                if(futureMonth - todayMonth == 0){
+                    if(futureYear - todayYear == 0){
+                        let todayExpireTime = (todayHour*3600000) + (todayMinutes*60000) + (todaySeconds * 1000) 
+                        let futureExpireTime = (futureHour*3600000) + (futureMinutes*60000) + (futureSeconds * 1000) 
+                        
+                        tte = futureExpireTime - todayExpireTime
+
+                        console.log(tte)
+                    }
+                }
+            }
+        }
+
+        console.log(new Date())
 
         function getJudgeStats(i){
             request({
@@ -83,12 +124,12 @@ module.exports = {
             for (let j = 0; j < judges.length; j++) {         
                 getJudgeStats(j);           
             }
-        }, 60000)
-
+        }, tte)
+        
         
 
-        console.log(judges)
-        return message.reply("In 60 seconds, I am judging those judges: " + judges)
+        console.log(judges) 
+        return message.reply("In " +tte / 600000 +" minutes, I am judging those judges: " + judges)
     }
 }
 
