@@ -70,6 +70,17 @@ module.exports = {
                         console.log(tte)
                     }
                 }
+            }else{
+                if(futureMonth - todayMonth == 0){
+                    if(futureYear - todayYear == 0){
+                        let todayExpireTime = (todayHour*3600000) + (todayMinutes*60000) + (todaySeconds * 1000) + futureMonth - todayMonth
+                        let futureExpireTime = (futureHour*3600000) + (futureMinutes*60000) + (futureSeconds * 1000) 
+                        
+                        tte = futureExpireTime - todayExpireTime
+
+                        console.log(tte)
+                    }
+                }
             }
         }
 
@@ -120,13 +131,18 @@ module.exports = {
                 }
             });
         }
-        setTimeout(() => {
-            for (let j = 0; j < judges.length; j++) {         
-                getJudgeStats(j);           
-            }
-        }, tte)
+
+        console.log(judges[0])
         
-        
+        if(judges[0]!=''){
+            setTimeout(() => {
+                for (let j = 0; j < judges.length; j++) {         
+                    getJudgeStats(j);           
+                }
+            }, tte)
+        }else{
+            message.reply('I think you have made a mistake putting judges')
+        }
 
         console.log(judges) 
         return message.reply("In " +tte / 600000 +" minutes, I am judging those judges: " + judges)
