@@ -21,6 +21,14 @@ module.exports = {
 
         let judges = []
         let tte = 0
+        let todayDate = new Date();
+        if(todayDate.getFullYear() % 4 == 0){
+            //febr 29
+            let daysPerMonth = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        }else{
+            let daysPerMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        }
+
 
         //control for nicknames validation
         if(args[0].split("")[9] == '(' && args[0].split("")[args[0].split("").length - 1] == ')'){
@@ -35,55 +43,98 @@ module.exports = {
             console.log(judges)
         }
 
-        if(args[1].split('-')[1].length == 8){
+        //-judgeontime nicknames() 0/11:00
+        if(args[1].split('/')[1].length == 5){
             console.log(args[1])
-            let date = args[1].split('-')[0]
-            let time = args[1].split('-')[1]
+            let date = args[1].split('/')[0]
+            if(date == 'today'){
 
-            let todayDate = new Date();
+            }else if(date == 'tomorrow'){
+
+            }else{
+
+            }
+
             let todayDay = todayDate.getDate()
             let todayMonth = (todayDate.getMonth() + 1 )
             let todayYear = todayDate.getFullYear()
             let todayHour = todayDate.getHours()
             let todayMinutes = todayDate.getMinutes()
-            let todaySeconds = todayDate.getSeconds()
 
-            console.log("date is: "+ todayDay + " " + todayMonth +" " + todayYear + " " +todayHour +" " + todayMinutes +" " + todaySeconds)
+            console.log("Today is is: "+ todayDay + " " + todayMonth +" " + todayYear + " " +todayHour +" " + todayMinutes)
 
-            let futureDay = date.split('/')[0]
-            let futureMonth = date.split('/')[1]
-            let futureYear = date.split('/')[2]
-            let futureHour = time.split(':')[0]
-            let futureMinutes = time.split(':')[1]
-            let futureSeconds = time.split(':')[2]
+            let daysToWait = date * 84600 * 1000 // days -> seconds -> ms
+            let time = args[1].split('/')[1]
+            let hour = (time.split(':')[0] == '00') ? '00' : time.split(':')[0]
+            let minutes = (time.split(':')[1] == '00') ? '00' : time.split(':')[1]
+            console.log(hour +":"+ minutes)
 
-            console.log("future date is: " +" " + futureDay +" " + futureMonth + " " +futureYear + " " +futureHour +" " + futureMinutes +" " +futureSeconds)
+            //noxter 🍕
+            //minute start = todayMinutes
+            //hour start = todayHour
+            //minute end = minutes
+            //hour end = hour 
+            let endMinutes = ""
+            let endHour = ""
+            let statusHour = ""
+            let statusMinute = ""
+            if(todayMinutes > minutes && todayHour > hour){
+                //both equal
 
-            if(futureDay - todayDay == 0){
-                if(futureMonth - todayMonth == 0){
-                    if(futureYear - todayYear == 0){
-                        let todayExpireTime = (todayHour*3600000) + (todayMinutes*60000) + (todaySeconds * 1000) 
-                        let futureExpireTime = (futureHour*3600000) + (futureMinutes*60000) + (futureSeconds * 1000) 
-                        
-                        tte = futureExpireTime - todayExpireTime
+                endMinutes = todayMinutes - minutes
+                endHour = todayHour - hour
+                statusMinute = "sub"
+                statusHour = "sub"
+            }else if(todayMinutes < minutes && todayHour < hour){
+                //both equal but opposite
 
-                        console.log(tte)
-                    }
-                }
-            }else{
-                if(futureMonth - todayMonth == 0){
-                    if(futureYear - todayYear == 0){
-                        let todayExpireTime = (todayHour*3600000) + (todayMinutes*60000) + (todaySeconds * 1000) + futureMonth - todayMonth
-                        let futureExpireTime = (futureHour*3600000) + (futureMinutes*60000) + (futureSeconds * 1000) 
-                        
-                        tte = futureExpireTime - todayExpireTime
+                endMinutes = minutes - todayMinutes
+                endHour = hour - todayHour
+                statusMinute = "add"
+                statusHour = "add"
+            }else if(todayMinutes > minutes && todayHour < hour){
+                //opposite eachothers  
 
-                        console.log(tte)
-                    }
-                }
+                endMinutes = todayMinutes - minutes 
+                endHour = hour - todayHour
+                statusMinute = "sub"
+                statusHour = "add"
+            }else if(todayMinutes < minutes && todayHour > hour){
+                //opposite eachothers 
+
+                endMinutes = minutes - todayMinutes
+                endHour = todayHour - hour 
+                statusMinute = "add"
+                statusHour = "sub"
+            }
+
+            console.log("end times")
+            console.log(endHour +":"+endMinutes)
+            console.log(statusHour +":"+statusMinute)
+        
+
+            switch(statusHour){
+                case 'add':
+                    tte = tte + (endHour * 60 * 60 * 1000)  // 1 ora 60 minuti 3600 secondi 3600000 ms
+                    break;
+                case 'sub':
+                    tte = tte - (endHour * 60 * 60 * 1000)  // 1 ora 60 minuti 3600 secondi 3600000 ms
+                    break;
+            }
+
+            switch(statusMinute){
+                case 'add':
+                    tte = tte + (endMinutes * 60 * 1000)  // 1 minuto 60 secondi 60000 ms
+                    break;
+                case 'sub':
+                    tte = tte - (endMinutes * 60 * 1000)  // 1 minuto 60 secondi 60000 ms
+                    break;
+            }
+
+            if(date != 0){
+                tte = tte + daysToWait
             }
         }
-
         console.log(new Date())
 
         function getJudgeStats(i){
@@ -145,7 +196,6 @@ module.exports = {
         }
 
         console.log(judges) 
-        return message.reply("In " +tte / 600000 +" minutes, I am judging those judges: " + judges)
+        return message.reply("In " +tte / 60000 +" minutes,("+ tte +" ms) I am judging those judges: " + judges)
     }
 }
-
