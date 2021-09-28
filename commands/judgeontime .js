@@ -46,7 +46,13 @@ module.exports = {
         //-judgeontime nicknames() 0/11:00
         if(args[1].split('/')[1].length == 5){
             console.log(args[1])
+
+            if(args[1].split('/')[0] < 0){
+                return message.reply("Why going back in time?")
+            }
+
             let date = args[1].split('/')[0]
+            
             if(date == 'today'){
 
             }else if(date == 'tomorrow'){
@@ -63,7 +69,7 @@ module.exports = {
 
             console.log("Today is is: "+ todayDay + " " + todayMonth +" " + todayYear + " " +todayHour +" " + todayMinutes)
 
-            let daysToWait = date * 84600 * 1000 // days -> seconds -> ms
+            
             let time = args[1].split('/')[1]
             let hour = (time.split(':')[0] == '00') ? '00' : time.split(':')[0]
             let minutes = (time.split(':')[1] == '00') ? '00' : time.split(':')[1]
@@ -78,6 +84,7 @@ module.exports = {
             let endHour = ""
             let statusHour = ""
             let statusMinute = ""
+            let daysToWait = 0
             if(todayMinutes > minutes && todayHour > hour){
                 //both equal
 
@@ -131,7 +138,19 @@ module.exports = {
                     break;
             }
 
-            if(date != 0){
+            
+            if(date == 0){
+                if(statusMinute == 'sub' && statusHour == 'sub'){
+                    return message.reply('sorry what doink?')
+                }else if(statusMinute == 'add' && statusHour == 'sub'){
+                    //all should be good smh
+                }else if(statusMinute == 'sub' && statusHour == 'add'){
+                    //all should be good smh
+                }else{
+                    return message.reply('sorry but bot is broken?')
+                }
+            }else{
+                daysToWait = date * 84600 * 1000 // days -> seconds -> ms
                 tte = tte + daysToWait
             }
         }
@@ -192,7 +211,7 @@ module.exports = {
                 }
             }, tte)
         }else{
-            message.reply('I think you have made a mistake putting judges')
+            return message.reply('I think you have made a mistake putting judges')
         }
 
         console.log(judges) 
