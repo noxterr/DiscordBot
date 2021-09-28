@@ -3,14 +3,12 @@ const request = require('request');
 
 module.exports = {
     name : 'judgeontime',
-    description : 'command that returns some JSON NON FORMATTED stats about justice verdicts',
+    description : 'command that returns data of judges on a certain date',
     execute(message, args){
 
         if(args.length==0){
-            return message.reply("what doink")
+            return message.reply("Why you think this command works if you don't put anything?")
         }
-
-        console.log(args)
         //space = array delimiter
         /*
         -judgeontime nicknames(noxter;thsiw;EmBee;buttley) DD/MM/YYYY-HH:MM:SS
@@ -32,7 +30,7 @@ module.exports = {
 
         //control for nicknames validation
         if(args[0].split("")[9] == '(' && args[0].split("")[args[0].split("").length - 1] == ')'){
-            console.log("nicknames validated")
+            //console.log("nicknames validated")
 
             let split = args[0].split("nicknames")[1].replace(/[()]+/g,"")
 
@@ -40,25 +38,27 @@ module.exports = {
             for (let i = 0; i < split.split(';').length; i++) {
                 judges.push(split.split(';')[i])                
             }
-            console.log(judges)
+            //console.log(judges)
         }
 
         //-judgeontime nicknames() 0/11:00
         if(args[1].split('/')[1].length == 5){
-            console.log(args[1])
+            //console.log(args[1])
 
             if(args[1].split('/')[0] < 0){
                 return message.reply("Why going back in time?")
-            }
+            }else{
+                console.log('gud')
+            } 
 
             let date = args[1].split('/')[0]
             
             if(date == 'today'){
-
+                date = 0
             }else if(date == 'tomorrow'){
-
-            }else{
-
+                date = 1
+            }else if(date == 'next_week'){
+                date = 15
             }
 
             let todayDay = todayDate.getDate()
@@ -67,13 +67,22 @@ module.exports = {
             let todayHour = todayDate.getHours()
             let todayMinutes = todayDate.getMinutes()
 
-            console.log("Today is is: "+ todayDay + " " + todayMonth +" " + todayYear + " " +todayHour +" " + todayMinutes)
+            //console.log("Today is is: "+ todayDay + " " + todayMonth +" " + todayYear + " " +todayHour +" " + todayMinutes)
 
             
             let time = args[1].split('/')[1]
             let hour = (time.split(':')[0] == '00') ? '00' : time.split(':')[0]
             let minutes = (time.split(':')[1] == '00') ? '00' : time.split(':')[1]
-            console.log(hour +":"+ minutes)
+            //console.log(hour +":"+ minutes)
+
+            if(hour.match(/0\d{1}/)){
+                hour = hour.split("")[1]
+            }
+
+            if(minutes.match(/0\d{1}/)){
+                minutes = minutes.split("")[1]
+            }
+
 
             //noxter 🍕
             //minute start = todayMinutes
@@ -85,39 +94,67 @@ module.exports = {
             let statusHour = ""
             let statusMinute = ""
             let daysToWait = 0
-            if(todayMinutes > minutes && todayHour > hour){
-                //both equal
+            if(todayMinutes != minutes && todayHour != hour){
+                if(todayMinutes > minutes && todayHour > hour){
+                    //both equal
 
-                endMinutes = todayMinutes - minutes
-                endHour = todayHour - hour
-                statusMinute = "sub"
-                statusHour = "sub"
-            }else if(todayMinutes < minutes && todayHour < hour){
-                //both equal but opposite
+                    endMinutes = todayMinutes - minutes
+                    endHour = todayHour - hour
+                    statusMinute = "sub"
+                    statusHour = "sub"
+                }else if(todayMinutes < minutes && todayHour < hour){
+                    //both equal but opposite
 
-                endMinutes = minutes - todayMinutes
-                endHour = hour - todayHour
-                statusMinute = "add"
-                statusHour = "add"
-            }else if(todayMinutes > minutes && todayHour < hour){
-                //opposite eachothers  
+                    endMinutes = minutes - todayMinutes
+                    endHour = hour - todayHour
+                    statusMinute = "add"
+                    statusHour = "add"
+                }else if(todayMinutes > minutes && todayHour < hour){
+                    //opposite eachothers  
 
-                endMinutes = todayMinutes - minutes 
-                endHour = hour - todayHour
-                statusMinute = "sub"
-                statusHour = "add"
-            }else if(todayMinutes < minutes && todayHour > hour){
-                //opposite eachothers 
+                    endMinutes = todayMinutes - minutes 
+                    endHour = hour - todayHour
+                    statusMinute = "sub"
+                    statusHour = "add"
+                }else if(todayMinutes < minutes && todayHour > hour){
+                    //opposite eachothers 
 
-                endMinutes = minutes - todayMinutes
-                endHour = todayHour - hour 
-                statusMinute = "add"
-                statusHour = "sub"
+                    endMinutes = minutes - todayMinutes
+                    endHour = todayHour - hour 
+                    statusMinute = "add"
+                    statusHour = "sub"
+                }
+            }else if(todayMinutes == minutes && todayHour == hour && date == 0){
+                return message.reply("bro, why using this command if you judging now? TF")
+            }else if(todayMinutes == minutes && todayHour != hour){
+                if(todayHour > hour){
+                    endMinutes = minutes
+                    endHour = todayHour - hour 
+                    statusHour = "sub"
+                    statusMinute = 'eql'
+                }else if(todayHour < hour){
+                    endMinutes = minutes
+                    endHour = hour - todayHour
+                    statusHour = "add"
+                    statusMinute = 'eql'
+                }
+            }else if(todayMinutes != minutes && todayHour == hour){
+                if(todayMinutes > minutes){
+                    endHour = hour
+                    endMinutes = todayMinutes - minutes 
+                    statusHour = "eql"
+                    statusMinute = 'sub'
+                }else if(todayMinutes < minutes){
+                    endHour = hour
+                    endMinutes = minutes - todayMinutes
+                    statusHour = "eql"
+                    statusMinute = 'add'
+                }
             }
 
-            console.log("end times")
-            console.log(endHour +":"+endMinutes)
-            console.log(statusHour +":"+statusMinute)
+            // console.log("end times")
+            // console.log(endHour +":"+endMinutes)
+            // console.log(statusHour +":"+statusMinute)
         
 
             switch(statusHour){
@@ -126,6 +163,9 @@ module.exports = {
                     break;
                 case 'sub':
                     tte = tte - (endHour * 60 * 60 * 1000)  // 1 ora 60 minuti 3600 secondi 3600000 ms
+                    break;
+                case 'eql':
+                    //
                     break;
             }
 
@@ -136,6 +176,9 @@ module.exports = {
                 case 'sub':
                     tte = tte - (endMinutes * 60 * 1000)  // 1 minuto 60 secondi 60000 ms
                     break;
+                case 'eql':
+                    //
+                    break;
             }
 
             
@@ -144,17 +187,20 @@ module.exports = {
                     return message.reply('sorry what doink?')
                 }else if(statusMinute == 'add' && statusHour == 'sub'){
                     //all should be good smh
+                    console.log("should be handled correclty ")
                 }else if(statusMinute == 'sub' && statusHour == 'add'){
                     //all should be good smh
+                    console.log("should be handled correclty too")
                 }else{
-                    return message.reply('sorry but bot is broken?')
+                    console.log("tte: " +tte)
                 }
             }else{
                 daysToWait = date * 84600 * 1000 // days -> seconds -> ms
                 tte = tte + daysToWait
+
+                console.log("tte: " +tte)
             }
         }
-        console.log(new Date())
 
         function getJudgeStats(i){
             request({
