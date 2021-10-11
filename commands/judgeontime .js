@@ -35,10 +35,12 @@ module.exports = {
             console.log(judges)
         }
 
-        if(args[1].split('-')[1].length == 8){
+        //-judgeontime nicknames() 2/01:00
+
+        if(args[1].split('/')[1].length == 5){
             console.log(args[1])
-            let date = args[1].split('-')[0]
-            let time = args[1].split('-')[1]
+            let date = args[1].split('/')[0]
+            let time = args[1].split('/')[1]
 
             let todayDate = new Date();
             let todayDay = todayDate.getDate()
@@ -50,43 +52,20 @@ module.exports = {
 
             console.log("date is: "+ todayDay + " " + todayMonth +" " + todayYear + " " +todayHour +" " + todayMinutes +" " + todaySeconds)
 
-            let futureDay = date.split('/')[0]
-            let futureMonth = date.split('/')[1]
-            let futureYear = date.split('/')[2]
+            let futureDay = todayDay + date.split('/')[0]
             let futureHour = time.split(':')[0]
             let futureMinutes = time.split(':')[1]
-            let futureSeconds = time.split(':')[2]
 
-            console.log("future date is: " +" " + futureDay +" " + futureMonth + " " +futureYear + " " +futureHour +" " + futureMinutes +" " +futureSeconds)
+            console.log("future date is: " +" " + futureDay +" " +futureHour +" " + futureMinutes)
 
-            if(futureDay - todayDay == 0){
-                if(futureMonth - todayMonth == 0){
-                    if(futureYear - todayYear == 0){
-                        let todayExpireTime = (todayHour*3600000) + (todayMinutes*60000) + (todaySeconds * 1000) 
-                        let futureExpireTime = (futureHour*3600000) + (futureMinutes*60000) + (futureSeconds * 1000) 
-                        
-                        tte = futureExpireTime - todayExpireTime
+            //old code past in old_comms         -judgeontime nicknames() 23/09/2021-23:41:00
 
-                        console.log(tte)
-                    }
-                }
-            }else{
-                if(futureMonth - todayMonth == 0){
-                    if(futureYear - todayYear == 0){
-                        let todayExpireTime = (todayHour*3600000) + (todayMinutes*60000) + (todaySeconds * 1000) + futureMonth - todayMonth
-                        let futureExpireTime = (futureHour*3600000) + (futureMinutes*60000) + (futureSeconds * 1000) 
-                        
-                        tte = futureExpireTime - todayExpireTime
 
-                        console.log(tte)
-                    }
-                }
-            }
         }
 
-        console.log(new Date())
+        //console.log(new Date())
 
-        function getJudgeStats(i){
+        /*function getJudgeStats(i){
             request({
                 url: `https://open.faceit.com/data/v4/players?nickname=`+judges[i],
                 headers: {
@@ -130,7 +109,7 @@ module.exports = {
                     });
                 }
             });
-        }
+        } */
 
         console.log(judges[0])
         
