@@ -3,14 +3,12 @@ const request = require('request');
 
 module.exports = {
     name : 'judgeontime',
-    description : 'command that returns some JSON NON FORMATTED stats about justice verdicts',
+    description : 'command that returns data of judges on a certain date',
     execute(message, args){
 
         if(args.length==0){
-            return message.reply("what doink")
+            return message.reply("Why you think this command works if you don't put anything?")
         }
-
-        console.log(args)
         //space = array delimiter
         /*
         -judgeontime nicknames(noxter;thsiw;EmBee;buttley) DD/MM/YYYY-HH:MM:SS
@@ -21,10 +19,18 @@ module.exports = {
 
         let judges = []
         let tte = 0
+        let todayDate = new Date();
+        if(todayDate.getFullYear() % 4 == 0){
+            //febr 29
+            let daysPerMonth = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        }else{
+            let daysPerMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        }
+
 
         //control for nicknames validation
         if(args[0].split("")[9] == '(' && args[0].split("")[args[0].split("").length - 1] == ')'){
-            console.log("nicknames validated")
+            //console.log("nicknames validated")
 
             let split = args[0].split("nicknames")[1].replace(/[()]+/g,"")
 
@@ -32,7 +38,7 @@ module.exports = {
             for (let i = 0; i < split.split(';').length; i++) {
                 judges.push(split.split(';')[i])                
             }
-            console.log(judges)
+            //console.log(judges)
         }
 
         //-judgeontime nicknames() 2/01:00
@@ -42,15 +48,42 @@ module.exports = {
             let date = args[1].split('/')[0]
             let time = args[1].split('/')[1]
 
-            let todayDate = new Date();
             let todayDay = todayDate.getDate()
             let todayMonth = (todayDate.getMonth() + 1 )
             let todayYear = todayDate.getFullYear()
             let todayHour = todayDate.getHours()
             let todayMinutes = todayDate.getMinutes()
-            let todaySeconds = todayDate.getSeconds()
 
-            console.log("date is: "+ todayDay + " " + todayMonth +" " + todayYear + " " +todayHour +" " + todayMinutes +" " + todaySeconds)
+            //console.log("Today is is: "+ todayDay + " " + todayMonth +" " + todayYear + " " +todayHour +" " + todayMinutes)
+
+            
+            let time = args[1].split('/')[1]
+            let hour = (time.split(':')[0] == '00') ? '00' : time.split(':')[0]
+            let minutes = (time.split(':')[1] == '00') ? '00' : time.split(':')[1]
+            //console.log(hour +":"+ minutes)
+
+            if(hour.match(/0\d{1}/)){
+                hour = hour.split("")[1]
+            }
+
+            if(minutes.match(/0\d{1}/)){
+                minutes = minutes.split("")[1]
+            }
+
+
+            //noxter 🍕
+            //minute start = todayMinutes
+            //hour start = todayHour
+            //minute end = minutes
+            //hour end = hour 
+            let endMinutes = ""
+            let endHour = ""
+            let statusHour = ""
+            let statusMinute = ""
+            let daysToWait = 0
+            if(todayMinutes != minutes && todayHour != hour){
+                if(todayMinutes > minutes && todayHour > hour){
+                    //both equal
 
             let futureDay = todayDay + date.split('/')[0]
             let futureHour = time.split(':')[0]
@@ -120,11 +153,10 @@ module.exports = {
                 }
             }, tte)
         }else{
-            message.reply('I think you have made a mistake putting judges')
+            return message.reply('I think you have made a mistake putting judges')
         }
 
         console.log(judges) 
-        return message.reply("In " +tte / 600000 +" minutes, I am judging those judges: " + judges)
+        return message.reply("In " +tte / 60000 +" minutes,("+ tte +" ms) I am judging those judges: " + judges)
     }
 }
-

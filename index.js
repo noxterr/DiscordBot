@@ -92,7 +92,7 @@ client.on('messageCreate', message =>{
 
     let leverage = 0
 
-    if(message.member.roles.cache.some(r => r.name === 'Administrator')){
+    if(message.member.roles.cache.some(r => r.name === 'Administrator') || message.member.roles.cache.some(r => r.name === 'ADMIN')){
         //an admin has availability of all commands -> level 5
         leverage = 5
     }else if(message.member.roles.cache.some(r => r.name === '@everyone')){
@@ -125,6 +125,9 @@ client.on('messageCreate', message =>{
             case 'auth':
                 //client.channels.cache.get('885199141037305916')
                 //setTimeout(() => message.delete(), 1250)
+                client.commands.get(command).execute(message, args)            
+                break;
+            case 'tocapri':
                 client.commands.get(command).execute(message, args)            
                 break;
         }
