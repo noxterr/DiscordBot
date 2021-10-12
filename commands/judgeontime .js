@@ -41,12 +41,25 @@ module.exports = {
             //console.log(judges)
         }
 
-        //-judgeontime nicknames() 2/01:00
-
+        //-judgeontime nicknames() 0/11:00
         if(args[1].split('/')[1].length == 5){
-            console.log(args[1])
+            //console.log(args[1])
+
+            if(args[1].split('/')[0] < 0){
+                return message.reply("Why going back in time?")
+            }else{
+                console.log('gud')
+            } 
+
             let date = args[1].split('/')[0]
-            let time = args[1].split('/')[1]
+            
+            if(date == 'today'){
+                date = 0
+            }else if(date == 'tomorrow'){
+                date = 1
+            }else if(date == 'next_week'){
+                date = 15
+            }
 
             let todayDay = todayDate.getDate()
             let todayMonth = (todayDate.getMonth() + 1 )
@@ -85,24 +98,115 @@ module.exports = {
                 if(todayMinutes > minutes && todayHour > hour){
                     //both equal
 
-            let futureDay = todayDay + date.split('/')[0]
-            let futureHour = time.split(':')[0]
-            let futureMinutes = time.split(':')[1]
+                    endMinutes = todayMinutes - minutes
+                    endHour = todayHour - hour
+                    statusMinute = "sub"
+                    statusHour = "sub"
+                }else if(todayMinutes < minutes && todayHour < hour){
+                    //both equal but opposite
 
-            console.log("future date is: " +" " + futureDay +" " +futureHour +" " + futureMinutes)
+                    endMinutes = minutes - todayMinutes
+                    endHour = hour - todayHour
+                    statusMinute = "add"
+                    statusHour = "add"
+                }else if(todayMinutes > minutes && todayHour < hour){
+                    //opposite eachothers  
 
-            //old code past in old_comms         -judgeontime nicknames() 23/09/2021-23:41:00
+                    endMinutes = todayMinutes - minutes 
+                    endHour = hour - todayHour
+                    statusMinute = "sub"
+                    statusHour = "add"
+                }else if(todayMinutes < minutes && todayHour > hour){
+                    //opposite eachothers 
 
+                    endMinutes = minutes - todayMinutes
+                    endHour = todayHour - hour 
+                    statusMinute = "add"
+                    statusHour = "sub"
+                }
+            }else if(todayMinutes == minutes && todayHour == hour && date == 0){
+                return message.reply("bro, why using this command if you judging now? TF")
+            }else if(todayMinutes == minutes && todayHour != hour){
+                if(todayHour > hour){
+                    endMinutes = minutes
+                    endHour = todayHour - hour 
+                    statusHour = "sub"
+                    statusMinute = 'eql'
+                }else if(todayHour < hour){
+                    endMinutes = minutes
+                    endHour = hour - todayHour
+                    statusHour = "add"
+                    statusMinute = 'eql'
+                }
+            }else if(todayMinutes != minutes && todayHour == hour){
+                if(todayMinutes > minutes){
+                    endHour = hour
+                    endMinutes = todayMinutes - minutes 
+                    statusHour = "eql"
+                    statusMinute = 'sub'
+                }else if(todayMinutes < minutes){
+                    endHour = hour
+                    endMinutes = minutes - todayMinutes
+                    statusHour = "eql"
+                    statusMinute = 'add'
+                }
+            }
 
+            // console.log("end times")
+            // console.log(endHour +":"+endMinutes)
+            // console.log(statusHour +":"+statusMinute)
+        
+
+            switch(statusHour){
+                case 'add':
+                    tte = tte + (endHour * 60 * 60 * 1000)  // 1 ora 60 minuti 3600 secondi 3600000 ms
+                    break;
+                case 'sub':
+                    tte = tte - (endHour * 60 * 60 * 1000)  // 1 ora 60 minuti 3600 secondi 3600000 ms
+                    break;
+                case 'eql':
+                    //
+                    break;
+            }
+
+            switch(statusMinute){
+                case 'add':
+                    tte = tte + (endMinutes * 60 * 1000)  // 1 minuto 60 secondi 60000 ms
+                    break;
+                case 'sub':
+                    tte = tte - (endMinutes * 60 * 1000)  // 1 minuto 60 secondi 60000 ms
+                    break;
+                case 'eql':
+                    //
+                    break;
+            }
+
+            
+            if(date == 0){
+                if(statusMinute == 'sub' && statusHour == 'sub'){
+                    return message.reply('sorry what doink?')
+                }else if(statusMinute == 'add' && statusHour == 'sub'){
+                    //all should be good smh
+                    console.log("should be handled correclty ")
+                }else if(statusMinute == 'sub' && statusHour == 'add'){
+                    //all should be good smh
+                    console.log("should be handled correclty too")
+                }else{
+                    console.log("tte: " +tte)
+                }
+            }else{
+                daysToWait = date * 84600 * 1000 // days -> seconds -> ms
+                tte = tte + daysToWait
+
+                console.log("tte: " +tte)
+            }
         }
 
-        //console.log(new Date())
-
-        /*function getJudgeStats(i){
+        function getJudgeStats(i){
             request({
                 url: `https://open.faceit.com/data/v4/players?nickname=`+judges[i],
                 headers: {
-                    'Authorization': `Bearer c763eb50-c2ed-4874-b63b-8b000979177e`
+                    'Authorization': `Bearer ${process.env.JUSTICE_BEARER_KEY}`
                 },
                 rejectUnauthorized: true
             }, function(err, response_api_def) {
@@ -113,7 +217,7 @@ module.exports = {
                     request({
                         url: `https://api.faceit.com/judge/v1/judges/${jsonMatches.player_id}/stats`,
                         headers: {
-                            'Authorization': `Bearer 01572f53-7fac-4796-9673-04dd54c1f467`
+                            'Authorization': `Bearer ${process.env.JUSTICE_BEARER_KEY}`
                         },
                         rejectUnauthorized: true
                     }, function(err, response_justice) {
@@ -142,7 +246,7 @@ module.exports = {
                     });
                 }
             });
-        } */
+        }
 
         console.log(judges[0])
         
