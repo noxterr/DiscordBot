@@ -7,3 +7,4 @@ config.json
 /commands/old_comms.txt
 /commands/update_status.js
 /commands/retrieveLogs.js
+index.js
