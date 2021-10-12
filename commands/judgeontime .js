@@ -206,7 +206,7 @@ module.exports = {
             request({
                 url: `https://open.faceit.com/data/v4/players?nickname=`+judges[i],
                 headers: {
-                    'Authorization': `Bearer ${process.env.JUSTICE_BEARER_KEY}`
+                    'Authorization': `Bearer ${process.env.API_BEARER_KEY}`
                 },
                 rejectUnauthorized: true
             }, function(err, response_api_def) {
