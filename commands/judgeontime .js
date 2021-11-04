@@ -17,16 +17,13 @@ module.exports = {
         
         */
 
-        let judges = []
         let tte = 0
-        let todayDate = new Date();
-        if(todayDate.getFullYear() % 4 == 0){
-            //febr 29
-            let daysPerMonth = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-        }else{
-            let daysPerMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-        }
 
+        let judges = []
+        let todayDate = new Date();
+        console.log(todayDate)
+        var milliseconds = todayDate.getTime();
+        console.log(milliseconds)
 
         //control for nicknames validation
         if(args[0].split("")[9] == '(' && args[0].split("")[args[0].split("").length - 1] == ')'){
@@ -38,169 +35,25 @@ module.exports = {
             for (let i = 0; i < split.split(';').length; i++) {
                 judges.push(split.split(';')[i])                
             }
-            //console.log(judges)
+            console.log(judges)
         }
 
-        //-judgeontime nicknames() 0/11:00
-        if(args[1].split('/')[1].length == 5){
-            //console.log(args[1])
+        if(args[1] == ''){
+            return message.reply('plz valid date')
+        }
+        let newDate = new Date(args[1]);
 
-            if(args[1].split('/')[0] < 0){
-                return message.reply("Why going back in time?")
-            }else{
-                console.log('gud')
-            } 
+        console.log('new date')
+        console.log(newDate)
 
-            let date = args[1].split('/')[0]
-            
-            if(date == 'today'){
-                date = 0
-            }else if(date == 'tomorrow'){
-                date = 1
-            }else if(date == 'next_week'){
-                date = 15
-            }
+        var newMilliseconds = newDate.getTime();
+        console.log(newMilliseconds)
 
-            let todayDay = todayDate.getDate()
-            let todayMonth = (todayDate.getMonth() + 1 )
-            let todayYear = todayDate.getFullYear()
-            let todayHour = todayDate.getHours()
-            let todayMinutes = todayDate.getMinutes()
-
-            //console.log("Today is is: "+ todayDay + " " + todayMonth +" " + todayYear + " " +todayHour +" " + todayMinutes)
-
-            
-            let time = args[1].split('/')[1]
-            let hour = (time.split(':')[0] == '00') ? '00' : time.split(':')[0]
-            let minutes = (time.split(':')[1] == '00') ? '00' : time.split(':')[1]
-            //console.log(hour +":"+ minutes)
-
-            if(hour.match(/0\d{1}/)){
-                hour = hour.split("")[1]
-            }
-
-            if(minutes.match(/0\d{1}/)){
-                minutes = minutes.split("")[1]
-            }
-
-
-            //noxter 🍕
-            //minute start = todayMinutes
-            //hour start = todayHour
-            //minute end = minutes
-            //hour end = hour 
-            let endMinutes = ""
-            let endHour = ""
-            let statusHour = ""
-            let statusMinute = ""
-            let daysToWait = 0
-            if(todayMinutes != minutes && todayHour != hour){
-                if(todayMinutes > minutes && todayHour > hour){
-                    //both equal
-
-                    endMinutes = todayMinutes - minutes
-                    endHour = todayHour - hour
-                    statusMinute = "sub"
-                    statusHour = "sub"
-                }else if(todayMinutes < minutes && todayHour < hour){
-                    //both equal but opposite
-
-                    endMinutes = minutes - todayMinutes
-                    endHour = hour - todayHour
-                    statusMinute = "add"
-                    statusHour = "add"
-                }else if(todayMinutes > minutes && todayHour < hour){
-                    //opposite eachothers  
-
-                    endMinutes = todayMinutes - minutes 
-                    endHour = hour - todayHour
-                    statusMinute = "sub"
-                    statusHour = "add"
-                }else if(todayMinutes < minutes && todayHour > hour){
-                    //opposite eachothers 
-
-                    endMinutes = minutes - todayMinutes
-                    endHour = todayHour - hour 
-                    statusMinute = "add"
-                    statusHour = "sub"
-                }
-            }else if(todayMinutes == minutes && todayHour == hour && date == 0){
-                return message.reply("bro, why using this command if you judging now? TF")
-            }else if(todayMinutes == minutes && todayHour != hour){
-                if(todayHour > hour){
-                    endMinutes = minutes
-                    endHour = todayHour - hour 
-                    statusHour = "sub"
-                    statusMinute = 'eql'
-                }else if(todayHour < hour){
-                    endMinutes = minutes
-                    endHour = hour - todayHour
-                    statusHour = "add"
-                    statusMinute = 'eql'
-                }
-            }else if(todayMinutes != minutes && todayHour == hour){
-                if(todayMinutes > minutes){
-                    endHour = hour
-                    endMinutes = todayMinutes - minutes 
-                    statusHour = "eql"
-                    statusMinute = 'sub'
-                }else if(todayMinutes < minutes){
-                    endHour = hour
-                    endMinutes = minutes - todayMinutes
-                    statusHour = "eql"
-                    statusMinute = 'add'
-                }
-            }
-
-            // console.log("end times")
-            // console.log(endHour +":"+endMinutes)
-            // console.log(statusHour +":"+statusMinute)
+        tte = newMilliseconds - milliseconds;
         
 
-            switch(statusHour){
-                case 'add':
-                    tte = tte + (endHour * 60 * 60 * 1000)  // 1 ora 60 minuti 3600 secondi 3600000 ms
-                    break;
-                case 'sub':
-                    tte = tte - (endHour * 60 * 60 * 1000)  // 1 ora 60 minuti 3600 secondi 3600000 ms
-                    break;
-                case 'eql':
-                    //
-                    break;
-            }
-
-            switch(statusMinute){
-                case 'add':
-                    tte = tte + (endMinutes * 60 * 1000)  // 1 minuto 60 secondi 60000 ms
-                    break;
-                case 'sub':
-                    tte = tte - (endMinutes * 60 * 1000)  // 1 minuto 60 secondi 60000 ms
-                    break;
-                case 'eql':
-                    //
-                    break;
-            }
-
-            
-            if(date == 0){
-                if(statusMinute == 'sub' && statusHour == 'sub'){
-                    return message.reply('sorry what doink?')
-                }else if(statusMinute == 'add' && statusHour == 'sub'){
-                    //all should be good smh
-                    console.log("should be handled correclty ")
-                }else if(statusMinute == 'sub' && statusHour == 'add'){
-                    //all should be good smh
-                    console.log("should be handled correclty too")
-                }else{
-                    console.log("tte: " +tte)
-                }
-            }else{
-                daysToWait = date * 84600 * 1000 // days -> seconds -> ms
-                tte = tte + daysToWait
-
-                console.log("tte: " +tte)
-            }
-        }
+        console.log('new tte')
+        console.log(tte)
 
         function getJudgeStats(i){
             request({
