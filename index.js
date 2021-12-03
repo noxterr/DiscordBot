@@ -47,7 +47,6 @@ client.once('ready' , () =>{
                     setTimeout(()=>{
 
                         embedObject = JSON.parse(embedObject)
-                        console.log(embedObject)
 
                         const exampleEmbed = new MessageEmbed()
                             .setColor('#0099ff')

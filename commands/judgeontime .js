@@ -9,13 +9,6 @@ module.exports = {
         if(args.length==0){
             return message.reply("Why you think this command works if you don't put anything?")
         }
-        //space = array delimiter
-        /*
-        -judgeontime nicknames(noxter;thsiw;EmBee;buttley) DD/MM/YYYY-HH:MM:SS
-        args0 -> tutto per nickname
-        args1 -> time
-        
-        */
 
         let tte = 0
 
@@ -101,7 +94,6 @@ module.exports = {
             });
         }
 
-        console.log(judges[0])
         
         if(judges[0]!=''){
             setTimeout(() => {
@@ -113,7 +105,6 @@ module.exports = {
             return message.reply('I think you have made a mistake putting judges')
         }
 
-        console.log(judges) 
-        return message.reply("In " +tte / 60000 +" minutes,("+ tte +" ms) I am judging those judges: " + judges)
+        return message.reply("In " + Math.ceil(tte / 60000) +" minutes (more or less), I am judging those judges: " + judges)
     }
 }
