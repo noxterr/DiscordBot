@@ -7,13 +7,7 @@ module.exports = {
     name : 'hubplayer',
     description : 'command that returns some JSON NON FORMATTED stats about justice verdicts',
     execute(message, args){
-        let apiBearer = "c763eb50-c2ed-4874-b63b-8b000979177e";
-        let uriId = "b455f6bf-1648-4a1f-a615-fc31c0814315";
         let regex = /(([a-z]?\d?)*){8}(-(([a-z]?\d?)*){4}){3}-(([a-z]?\d?)*){12}/;
-        //HUB URI b455f6bf-1648-4a1f-a615-fc31c0814315
-        //API KEY c763eb50-c2ed-4874-b63b-8b000979177e
-        //HUB API LINK https://open.faceit.com/data/v4/hubs/b455f6bf-1648-4a1f-a615-fc31c0814315/members?offset=0&limit=100
-        //API PLAYER LINK https://open.faceit.com/data/v4/players?nickname=noxter
 
         //checks if there is an argument - NEEDED
         if (!args[0]) return message.reply("Please put a valid faceit player name")
