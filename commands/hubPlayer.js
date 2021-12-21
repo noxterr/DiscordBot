@@ -19,7 +19,6 @@ module.exports = {
         if (args[0] <= 0) return message.reply("Please put a valid faceit player name")
 
         //opening DB
-        console.log("I WILL TRY CONNECTING NOW")
         mongoose.connect(`mongodb+srv://${process.env.MONGO_DB_CREDS}@cluster1.j7mnp.mongodb.net/purple-lambda?retryWrites=true&w=majority`, {
             useNewUrlParser: true,
             useUnifiedTopology: true
@@ -30,18 +29,15 @@ module.exports = {
         try{
             let number = parseInt(args[0]);
             if(number.toString().length == args[0].length){
-                console.log("Args[0] is not a string, thus is the discord ID: " + args[0]);
                 let disc_id = args[0];
                 filter = { discord_id: disc_id };
             } 
 
             if(Number.isNaN(parseInt(args[0]))) {
-                console.log("Args[0] is the faceit username, thus is the nickname is: " + args[0]);
                 let nickname  = args[0];
                 filter = { nickname: nickname };
             } else {
                 if (args[0].match(regex)) {
-                    console.log("Args[0] is the faceit user_id, thus is the faceit user ID: " + args[0]);
                     let player_id = args[0];
                     filter = { player_id: player_id };
                 }
@@ -51,7 +47,6 @@ module.exports = {
             console.log(e);
         }
 
-        console.log(filter)
 
         //open the DB connection
         mongoose.connection.once('open', function () {
@@ -59,9 +54,7 @@ module.exports = {
                 //check for which type of filter we should apply: nickname, discord_id or faceit_player_id
                
                 doc = await Player.findOne(filter);
-                console.log(filter)
                 if(doc){
-                    console.log(doc)
                     //player is authorized
                     //here we check if the player is in the HUB
                     request({

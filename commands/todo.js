@@ -21,15 +21,12 @@ module.exports = {
             let connected = true
 
             mongoose.connection.once('open', function() {
-                console.log('Connected!');
                 //create the schemed player
                 (async() => {
                     await Todo.find({ todo_id: args[0] }, (err, data) => {
                         if (err) {
-                            console.log(err);
                         } else {
                             if (data && data.length != 0) {
-                                console.log(data[0].todo);
                                 message.author.send("Todo has number " + data[0].todo_id + ", added from "+data[0].author + " and has this objective: \'" +data[0].todo +"\`");
                             } else {
                                 message.author.send("your asked todo does not and exists, free to create a new one");
@@ -38,7 +35,6 @@ module.exports = {
                     });
                 })();
                 if (connected) {
-                    console.log('I close the connection')
                     setTimeout(() => {
                         mongoose.connection.close()
                     }, 1500)
@@ -78,8 +74,6 @@ module.exports = {
 
             let user_id = message.author.id
             let user_name = message.author.username
-            console.log("username: " + user_name)
-            console.log(message.author)
             mongoose.connect(`mongodb+srv://${process.env.MONGO_DB_CREDS}@cluster1.j7mnp.mongodb.net/purple-lambda?retryWrites=true&w=majority`, {
                 useNewUrlParser: true,
                 useUnifiedTopology: true
@@ -91,7 +85,6 @@ module.exports = {
             rndBumber = Math.floor(Math.random() * 100000);
 
             mongoose.connection.once('open', function() {
-                console.log('Connected!');
                 //create the schemed player
                 (async() => {
                     await Todo.create({
@@ -105,7 +98,6 @@ module.exports = {
                 })();
 
                 if (connected) {
-                    console.log('I close the connection')
                     setTimeout(() => {
                         mongoose.connection.close()
                         message.reply("your todo has been added to the list and has ID: " + rndBumber);
