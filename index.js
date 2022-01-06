@@ -163,6 +163,9 @@ client.on('messageCreate', message =>{
             case 'help':
                 client.commands.get(command).execute(message, args)
                 break;   
+            case 'player':
+                client.commands.get(command).execute(message, args)
+                break; 
             case 'hubplayer':
                 client.commands.get(command).execute(message, args)
                 break;    
