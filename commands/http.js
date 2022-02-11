@@ -5,8 +5,12 @@ module.exports = {
     name: 'http',
     description: 'command that closes support for a user',
     execute(message, args, id) {
-        request({
-            url: 'noxters.com/api/v2/prod/e/list',
+        request.post({
+            url: 'https://www.noxters.com/api/v2/prod/e/list',
+            headers: {
+                'Content-type': 'application/json',
+                'Accept' : 'application/json'
+            },
             rejectUnauthorized: false
         }, function(err, res) {
             if(err) {
@@ -14,6 +18,7 @@ module.exports = {
                 message.channel.send("Something went wrong " + err)
             } else {
                 const response = JSON.parse(res.body)
+                return message.reply(response.message)
             }
         });
     }

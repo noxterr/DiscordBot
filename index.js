@@ -181,6 +181,9 @@ client.on('messageCreate', message =>{
                 client.commands.get(command).execute(message, args)
                 //list.members.cache.forEach(member => console.log(member.user.username));
                 break
+            case 'savejudgestats':
+                client.commands.get(command).execute(message, args)
+                break;
         }
     }
 
