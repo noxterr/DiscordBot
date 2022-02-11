@@ -24,7 +24,7 @@ module.exports = {
                 let obj = JSON.parse(res.body)
                 let uriParser = obj.faceit_url.split('{lang}')
                 let url = uriParser[0] + 'en' + uriParser[1]
-                message.channel.send('```Player ' + obj.nickname + ' has player_id: ' + obj.player_id + ' Steam_id_64: ' + obj.steam_id_64)
+                message.channel.send('```Player ' + obj.nickname + ' has player_id: ' + obj.player_id + ' Steam_id_64: ' + obj.steam_id_64 +'```')
             }
         });
 
