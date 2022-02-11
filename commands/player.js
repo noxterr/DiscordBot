@@ -8,7 +8,7 @@ module.exports = {
     execute(message, args){
         if(args.length==0){
             return message.reply("Why you think this command works if you don't put anything?")
-        }    
+        }
 
         request({
             url: `https://open.faceit.com/data/v4/players?nickname=`+args[0],
@@ -24,7 +24,7 @@ module.exports = {
                 let obj = JSON.parse(res.body)
                 let uriParser = obj.faceit_url.split('{lang}')
                 let url = uriParser[0] + 'en' + uriParser[1]
-                message.channel.send('```Player ' + obj.nickname + ' has player_id: ' + obj.player_id + ' Steam_id_64: ' + obj.steam_id_64 +'```'+ `${(url)}`) 
+                message.channel.send('```Player ' + obj.nickname + ' has player_id: ' + obj.player_id + ' Steam_id_64: ' + obj.steam_id_64)
             }
         });
 

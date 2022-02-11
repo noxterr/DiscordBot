@@ -103,7 +103,6 @@ client.on('messageCreate', message =>{
 
     //console.log(client)
 
-    
 
     if(args[0] != null){
         client.channels.cache.get('885199141037305916').send("\`-"+command + " " + args[0] + "\` has been typed into a channel from `" + `${message.member.user.username}`+"`") // need to tag on logs? `<@${message.member.user.id}>`
@@ -125,14 +124,14 @@ client.on('messageCreate', message =>{
             case 'auth':
                 //client.channels.cache.get('885199141037305916')
                 //setTimeout(() => message.delete(), 1250)
-                client.commands.get(command).execute(message, args)            
+                client.commands.get(command).execute(message, args)
                 break;
             case 'tocapri':
-                client.commands.get(command).execute(message, args)            
+                client.commands.get(command).execute(message, args)
                 break;
         }
-    }   
-    
+    }
+
     if(leverage >= 3){ //moderator level
         //console.log('admin + mod')
         switch (command){
@@ -143,7 +142,7 @@ client.on('messageCreate', message =>{
                 client.commands.get(command).execute(message, args)
                 break;
             case 'auth':
-                client.commands.get(command).execute(message, args)            
+                client.commands.get(command).execute(message, args)
                 break;
         }
     }
@@ -151,24 +150,24 @@ client.on('messageCreate', message =>{
     if(leverage >= 5){ //admin level
         //console.log('admin only')
         switch (command){
-            case 'judge':          
-                client.commands.get(command).execute(message, args)                 
+            case 'judge':
+                client.commands.get(command).execute(message, args)
             break;
             case 'date':
                 client.commands.get(command).execute(message, args)
-                break; 
+                break;
             case 'clear':
                 client.commands.get(command).execute(message, args)
-                break; 
+                break;
             case 'help':
                 client.commands.get(command).execute(message, args)
-                break;   
+                break;
             case 'player':
                 client.commands.get(command).execute(message, args)
-                break; 
+                break;
             case 'hubplayer':
                 client.commands.get(command).execute(message, args)
-                break;    
+                break;
             case 'todo':
                 client.commands.get(command).execute(message, args)
                 break;
@@ -178,19 +177,18 @@ client.on('messageCreate', message =>{
             case 'judgeontime':
                 client.commands.get(command).execute(message, args)
                 break
-            case 'nsdr':
-                const list = client.guilds.cache.get("803308964716347442");
-                console.log(list) 
-                // list.members.cache.forEach(member => console.log(member.user.username)); 
+            case 'http':
+                client.commands.get(command).execute(message, args)
+                //list.members.cache.forEach(member => console.log(member.user.username));
                 break
         }
-    }  
+    }
 
-    
+
 })
 
 client.on('messageCreate', gotMessage);
-    
+
 function gotMessage(msg) {
     switch(msg.content){
         case 'I am amazing':

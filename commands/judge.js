@@ -35,7 +35,7 @@ module.exports = {
 
                 message.channel.send("Stats of justice from \`The Justice Department\`:" +statsJ)
             }
-        }); 
+        });
 
         }else if(args.length == 1){
             // if there are arguments, check if is only a judge or a list of judges
@@ -54,6 +54,7 @@ module.exports = {
                             message.channel.send("Something went wrong " + err)
                         } else {
                             let jsonMatches = JSON.parse(response_api_def.body)
+                            console.log(jsonMatches)
                             request({
                                 url: `https://api.faceit.com/judge/v1/judges/${jsonMatches.player_id}/stats`,
                                 headers: {
@@ -66,20 +67,20 @@ module.exports = {
                                     message.channel.send("Something went wrong " + err)
                                 } else {
                                     let jsonJudgeStats = JSON.parse(response_justice.body)
-                                    
+
                                     let stats = ""
-        
+
                                     let total_verdicts =      "\nTotal Verdicts : "+jsonJudgeStats.payload.total_verdicts
-                                    let total_cases_closed =  "\nTotal Cases Closed : "+jsonJudgeStats.payload.total_cases_closed                           
+                                    let total_cases_closed =  "\nTotal Cases Closed : "+jsonJudgeStats.payload.total_cases_closed
                                     let total_good_verdicts = "\nTotal Good Verdicts "+jsonJudgeStats.payload.total_good_verdicts
-                                    let total_bad_verdicts =  "\nTotal Bad Verdicts "+jsonJudgeStats.payload.total_bad_verdicts     
-                                    
-                                    let perCalc = jsonJudgeStats.payload.total_good_verdicts / jsonJudgeStats.payload.total_cases_closed * 100;                           
+                                    let total_bad_verdicts =  "\nTotal Bad Verdicts "+jsonJudgeStats.payload.total_bad_verdicts
+
+                                    let perCalc = jsonJudgeStats.payload.total_good_verdicts / jsonJudgeStats.payload.total_cases_closed * 100;
                                     let percentage =          "\nPercentage of Good Verdicts "+perCalc.toFixed(2)+"%"
-                                                        
-        
+
+
                                     stats = "\`\`\`" + total_verdicts + total_cases_closed + total_good_verdicts + total_bad_verdicts + percentage + "\`\`\`"
-        
+
                                     message.channel.send("Justice stats from \`"+judge+"\`:" +stats)
                                 }
                             });
@@ -120,7 +121,7 @@ module.exports = {
                                 let total_bad_verdicts =  "\nTotal Bad Verdicts "+jsonJudgeStats.payload.total_bad_verdicts     
                                 
                                 let perCalc = jsonJudgeStats.payload.total_good_verdicts / jsonJudgeStats.payload.total_cases_closed * 100;                           
-                                let percentage =          "\nPercentage of Good Verdicts "+perCalc.toFixed(2)+"%"
+                                let percentage = "\nPercentage of Good Verdicts "+perCalc.toFixed(2)+"%"
                                                     
     
                                 stats = "\`\`\`" + total_verdicts + total_cases_closed + total_good_verdicts + total_bad_verdicts + percentage + "\`\`\`"
