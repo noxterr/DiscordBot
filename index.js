@@ -184,7 +184,10 @@ client.on('messageCreate', message =>{
             case 'savejudgestats':
                 client.commands.get(command).execute(message, args)
                 break;
-        }
+            case 'updateleaderboard':
+                client.commands.get(command).execute(message, args)
+                break;
+            }
     }
 
 

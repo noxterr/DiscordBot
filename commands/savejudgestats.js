@@ -27,7 +27,7 @@ module.exports = {
             } else {
                 url = "https://noxters.com/api/v1/faceit/justice/saveSpecific?c=res"
                 body = {
-                    u: "M1CHES;Irene_TS;lad00;thsiw;Bonanno;FINElias;NoStep0nSnek;Licmi_eXe;noxter;cody_sw;justMemo;LUGOW;OliverDPlace;M1XxY;xck;AleksTG"
+                    u: "M1CHES;IlIlIIlIlIll;lad00;thsiw;Bonanno;FINElias;NoStep0nSnek;Licmi_eXe;noxter;cody_sw;justMemo;LUGOW;OliverDPlace;M1XxY;xck;AleksTG"
                 }
             }
 
