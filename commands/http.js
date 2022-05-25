@@ -5,8 +5,14 @@ module.exports = {
     name: 'http',
     description: 'command that closes support for a user',
     execute(message, args, id) {
+        let url = ''
+        if (args && args.length > 0 && args[0] != '') {
+            url = args[0]
+        } else {
+            url = 'https://www.noxters.com/api/v2/prod/e/list'
+        }
         request.post({
-            url: 'https://www.noxters.com/api/v2/prod/e/list',
+            url: url,
             headers: {
                 'Content-type': 'application/json',
                 'Accept' : 'application/json'
