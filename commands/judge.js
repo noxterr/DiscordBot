@@ -10,7 +10,7 @@ module.exports = {
         request({
             url: `https://api.faceit.com/judge/v1/stats`,
             headers: {
-                'Authorization': `Bearer ${process.env.JUSTICE_BEARER_KEY}` //and old bearer c763eb50-c2ed-4874-b63b-8b000979177e
+                'Authorization': `Bearer ${process.env.JUSTICE_BEARER_KEY}`
             },
             rejectUnauthorized: false
         }, function(err, res) {
@@ -22,14 +22,14 @@ module.exports = {
                 console.log(jsonJudge)
 
                 let statsJ = ""
-       
-                let total_verdicts =            "\nTotal Verdicts : "+jsonJudge.payload.total_verdicts
-                let total_cases_closed =        "\nTotal Cases Closed : "+jsonJudge.payload.total_cases_closed                           
-                let total_punishments =         "\nTotal Punishments "+jsonJudge.payload.total_punishments 
 
-                let perCalcJ =                  jsonJudge.payload.total_punishments / jsonJudge.payload.total_cases_closed * 100;                           
-                let percentageJ =               "\nPercentage of Punished  "+perCalcJ.toFixed(2)+"%"    
-                
+                let total_verdicts =            "\nTotal Verdicts : "+jsonJudge.payload.total_verdicts
+                let total_cases_closed =        "\nTotal Cases Closed : "+jsonJudge.payload.total_cases_closed
+                let total_punishments =         "\nTotal Punishments "+jsonJudge.payload.total_punishments
+
+                let perCalcJ =                  jsonJudge.payload.total_punishments / jsonJudge.payload.total_cases_closed * 100;
+                let percentageJ =               "\nPercentage of Punished  "+perCalcJ.toFixed(2)+"%"
+
                 statsJ = "\`\`\`" + total_verdicts + total_cases_closed + total_punishments + percentageJ +  "\`\`\`"
 
 
@@ -112,20 +112,20 @@ module.exports = {
                                 message.channel.send("Something went wrong " + err)
                             } else {
                                 let jsonJudgeStats = JSON.parse(response_justice.body)
-                                
+
                                 let stats = ""
-    
+
                                 let total_verdicts =      "\nTotal Verdicts : "+jsonJudgeStats.payload.total_verdicts
-                                let total_cases_closed =  "\nTotal Cases Closed : "+jsonJudgeStats.payload.total_cases_closed                           
+                                let total_cases_closed =  "\nTotal Cases Closed : "+jsonJudgeStats.payload.total_cases_closed
                                 let total_good_verdicts = "\nTotal Good Verdicts "+jsonJudgeStats.payload.total_good_verdicts
-                                let total_bad_verdicts =  "\nTotal Bad Verdicts "+jsonJudgeStats.payload.total_bad_verdicts     
-                                
-                                let perCalc = jsonJudgeStats.payload.total_good_verdicts / jsonJudgeStats.payload.total_cases_closed * 100;                           
+                                let total_bad_verdicts =  "\nTotal Bad Verdicts "+jsonJudgeStats.payload.total_bad_verdicts
+
+                                let perCalc = jsonJudgeStats.payload.total_good_verdicts / jsonJudgeStats.payload.total_cases_closed * 100;
                                 let percentage = "\nPercentage of Good Verdicts "+perCalc.toFixed(2)+"%"
-                                                    
-    
+
+
                                 stats = "\`\`\`" + total_verdicts + total_cases_closed + total_good_verdicts + total_bad_verdicts + percentage + "\`\`\`"
-    
+
                                 message.channel.send("Stats of justice from \`"+args[0]+"\`:" +stats)
                             }
                         });
