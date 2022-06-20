@@ -9,7 +9,7 @@
   </a>
 </p>
 
-# ![Logo](https://github.com/mongodb/mongo/blob/master/docs/leaf.svg) 
+# ![Logo](https://github.com/mongodb/mongo/blob/master/docs/leaf.svg)
 
 # Purple Lambda Discord BOT
 A Discord Bot made with Node.js for Purple Lambda
