@@ -14,4 +14,4 @@ const player_data = new Schema({
     steam_64 : String
 });
 
-module.exports = mongoose.model('player-data', player_data);     
+module.exports = mongoose.model('player-data', player_data);

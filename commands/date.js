@@ -8,8 +8,7 @@ module.exports = {
             url: `https://api.faceit.com/time`,
             headers: {
                 'Authorization': `Bearer ${process.env.JUSTICE_BEARER_KEY}`
-            },
-            rejectUnauthorized: false
+            }
         }, function(err, res) {
             if(err) {
                 console.error(err);

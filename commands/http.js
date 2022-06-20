@@ -16,8 +16,7 @@ module.exports = {
             headers: {
                 'Content-type': 'application/json',
                 'Accept' : 'application/json'
-            },
-            rejectUnauthorized: false
+            }
         }, function(err, res) {
             if(err) {
                 console.error(err);

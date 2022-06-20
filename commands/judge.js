@@ -11,8 +11,7 @@ module.exports = {
             url: `https://api.faceit.com/judge/v1/stats`,
             headers: {
                 'Authorization': `Bearer ${process.env.JUSTICE_BEARER_KEY}`
-            },
-            rejectUnauthorized: false
+            }
         }, function(err, res) {
             if(err) {
                 console.error(err);
@@ -46,8 +45,7 @@ module.exports = {
                         url: `https://open.faceit.com/data/v4/players?nickname=`+judge,
                         headers: {
                             'Authorization': `Bearer ${process.env.API_BEARER_KEY}`
-                        },
-                        rejectUnauthorized: false
+                        }
                     }, function(err, response_api_def) {
                         if(err) {
                             console.error(err);
@@ -59,8 +57,7 @@ module.exports = {
                                 url: `https://api.faceit.com/judge/v1/judges/${jsonMatches.player_id}/stats`,
                                 headers: {
                                     'Authorization': `Bearer ${process.env.JUSTICE_BEARER_KEY}`
-                                },
-                                rejectUnauthorized: false
+                                }
                             }, function(err, response_justice) {
                                 if(err) {
                                     console.error(err);
@@ -92,8 +89,7 @@ module.exports = {
                     url: `https://open.faceit.com/data/v4/players?nickname=`+args[0],
                     headers: {
                         'Authorization': `Bearer ${process.env.API_BEARER_KEY}`
-                    },
-                    rejectUnauthorized: false
+                    }
                 }, function(err, response_api_def) {
                     if(err) {
                         console.error(err);
@@ -104,8 +100,7 @@ module.exports = {
                             url: `https://api.faceit.com/judge/v1/judges/${jsonMatches.player_id}/stats`,
                             headers: {
                                 'Authorization': `Bearer ${process.env.JUSTICE_BEARER_KEY}`
-                            },
-                            rejectUnauthorized: false
+                            }
                         }, function(err, response_justice) {
                             if(err) {
                                 console.error(err);

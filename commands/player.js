@@ -14,8 +14,7 @@ module.exports = {
             url: `https://open.faceit.com/data/v4/players?nickname=`+args[0],
             headers: {
                 'Authorization': `Bearer ${process.env.API_BEARER_KEY}`
-            },
-            rejectUnauthorized: false
+            }
         }, function(err, res) {
             if(err) {
                 console.error(err);

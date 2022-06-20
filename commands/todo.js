@@ -5,9 +5,6 @@ module.exports = {
     name: 'todo',
     description: 'command that adds the TODO to the DB',
     execute(message, args) {
-
-        //creds  ${process.env.MONGO_DB_CREDS}
-
         if (!args) {
             return message.reply("please insert the correct value");
         }
@@ -17,7 +14,7 @@ module.exports = {
                 useNewUrlParser: true,
                 useUnifiedTopology: true
             });
-            
+
             let connected = true
 
             mongoose.connection.once('open', function() {

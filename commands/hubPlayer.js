@@ -31,7 +31,7 @@ module.exports = {
             if(number.toString().length == args[0].length){
                 let disc_id = args[0];
                 filter = { discord_id: disc_id };
-            } 
+            }
 
             if(Number.isNaN(parseInt(args[0]))) {
                 let nickname  = args[0];
@@ -41,7 +41,7 @@ module.exports = {
                     let player_id = args[0];
                     filter = { player_id: player_id };
                 }
-            } 
+            }
 
         }catch(e){
             console.log(e);
@@ -52,26 +52,24 @@ module.exports = {
         mongoose.connection.once('open', function () {
             (async () => {
                 //check for which type of filter we should apply: nickname, discord_id or faceit_player_id
-               
+
                 doc = await Player.findOne(filter);
                 if(doc){
                     //player is authorized
                     //here we check if the player is in the HUB
                     request({
                         url: `https://open.faceit.com/data/v4/players?nickname=${doc.nickname}`,
-                        headers: {'Authorization': `Bearer ${process.env.API_BEARER_KEY}`},
-                        rejectUnauthorized: false
+                        headers: {'Authorization': `Bearer ${process.env.API_BEARER_KEY}`}
                     }, function(err, res) {
                         if(err) {
                             console.error(err);
                             message.reply("Something went wrong - if problem persists, contact <@355265732940136448> or FaceIt staff")
                         } else {
                             json = JSON.parse(res.body)
-                        
+
                             request({
                                 url: `https://open.faceit.com/data/v4/hubs/b455f6bf-1648-4a1f-a615-fc31c0814315/members?offset=0&limit=100`,
-                                headers: {'Authorization': `Bearer ${process.env.API_BEARER_KEY}`},
-                                rejectUnauthorized: false
+                                headers: {'Authorization': `Bearer ${process.env.API_BEARER_KEY}`}
                             }, function(errHub, resHub) {
                                 if(errHub) {
                                     console.error(errHub);

@@ -16,9 +16,9 @@ module.exports = {
 
         var role = message.guild.roles.cache.find(role => role.name === "Support needed");
         member.roles.add(role)
-        
+
         setTimeout(() => message.delete(), 1500)
-        
+
         return supportRequest
     }
 }
