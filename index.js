@@ -15,16 +15,14 @@ for(const file of commandFile){
 }
 
 client.once('ready' , () =>{
-    
+
     async function edit(){
 
         const channel = await client.channels.fetch('878988648916320266')
-        //878988648916320266
-
         channel.messages.fetch().then((messages) => {
             if(messages.size === 0){
-
-            }else{      
+                console.error('Message size is not compatible with standardized output')
+            }else{
                 for(const message of messages){
                     let embedObject = ''
 
@@ -41,9 +39,9 @@ client.once('ready' , () =>{
                                     .then(responseFaceit => responseFaceit.json())
                                     .then(jsonSteam =>{
                                         embedObject += `{"heroku":[{"app_status" : "${jsonHeroku.status[0].status}"}, {"data_status" : "${jsonHeroku.status[1].status}"}], "faceit_status" : "${jsonFaceit.status.description}" , "faceit_status_url" : "${jsonFaceit.page.url}", "steam_status" : "${jsonSteam.result.services.SessionsLogon}"}`
-                                    })  
-                                })             
-                        })   
+                                    })
+                                })
+                        })
 
                     setTimeout(()=>{
 
@@ -62,23 +60,23 @@ client.once('ready' , () =>{
                                 /* { name: '\u200B', value: '\u200B' },*/
                                 { name: 'Faceit Stats', value: `[${embedObject.faceit_status}](${embedObject.faceit_status_url})`, inline: false },
                                 { name: 'Steam Session Status', value: (embedObject.steam_status == 'normal' ? '✅' : '❌'), inline: false },
-                            ) 
+                            )
                             /*.addField('Inline field title', 'Some value here', true)*/
                             .setTimestamp()
-                            .setFooter('Last update was:', purpleLambdaBotImg); 
+                            .setFooter('Last update was:', purpleLambdaBotImg);
                                 setTimeout(()=>{
-                                    message[1].edit({ embeds: [exampleEmbed] }) 
+                                    message[1].edit({ embeds: [exampleEmbed] })
                                 }, 500)
                     }, 5000)
                 }
             }
         })
     };
-    
+
     setInterval(() => {
         edit();
-    }, 3600000) // 60 minutes = 3600 seconds = 3600000 ms 
-    
+    }, 3600000) // 60 minutes = 3600 seconds = 3600000 ms
+
 
     console.log('purple lambda is on and run');
 })
