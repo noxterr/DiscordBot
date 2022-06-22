@@ -14,7 +14,7 @@ for(const file of commandFile){
     client.commands.set(command.name, command)
 }
 
-client.once('ready' , () =>{
+client.once('ready' , () => {
 
     async function edit(){
 
@@ -87,7 +87,6 @@ client.on('messageCreate', message =>{
     const args = message.content.slice(prefix.length).split(" ")
     const command = args.shift().toLowerCase()
 
-
     let leverage = 0
 
     if(message.member.roles.cache.some(r => r.name === 'Administrator') || message.member.roles.cache.some(r => r.name === 'ADMIN')){
@@ -109,7 +108,6 @@ client.on('messageCreate', message =>{
     }
 
     if(leverage >= 1){ //anything else
-        //console.log('admin + mod + everyone')
         switch (command){
             case 'support':
                 //client.channels.cache.get('885199141037305916')
@@ -179,10 +177,7 @@ client.on('messageCreate', message =>{
                 client.commands.get(command).execute(message, args)
                 //list.members.cache.forEach(member => console.log(member.user.username));
                 break
-            case 'savejudgestats':
-                client.commands.get(command).execute(message, args)
-                break;
-            case 'updateleaderboard':
+            case 'ban':
                 client.commands.get(command).execute(message, args)
                 break;
             }
