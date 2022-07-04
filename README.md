@@ -1,15 +1,14 @@
 
 <p align="center">
-  <a href="https://nodejs.org/">
+  <a href="https://discord.js.org">
     <img
-      alt="Node.js"
-      src="https://nodejs.org/static/images/logo-light.svg"
-      width="200"
+      alt="Discord.js"
+      src="https://github.com/devicons/devicon/blob/master/icons/discordjs/discordjs-original.svg"
+      width="150"
     />
   </a>
 </p>
 
-# ![Logo](https://github.com/mongodb/mongo/blob/master/docs/leaf.svg)
 
 # Purple Lambda Discord BOT
 A Discord Bot made with Node.js for Purple Lambda
@@ -31,8 +30,10 @@ A Discord Bot made with Node.js for Purple Lambda
 ## Use this repo
 
 ```
-git clone <this.repo><dev>
-npm update to get all dependencies
+git clone <repo>
+npm i
+cp .env.example .env
+npm start
 ```
 
 ## Heroku Logs
@@ -40,7 +41,7 @@ npm update to get all dependencies
 ```
 heroku login
 heroku logs -a lambda-purple-bot
-heroku logs -a lambda-purple-bot -n 1500
+heroku logs -a lambda-purple-bot -n 1500 # for limited longs at 1500 lines
 ```
 
 ## Changelog
@@ -51,7 +52,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [released]
-## [2.1.7] 03-12-2021
+## [2.1.8] 04-7-2022
 
-- `console.logs` are removed around to help improve logs retrace on hard commands
-- `cron.js` will be introduced to allow judge on time
+- Major fixes and doc, commands and prod, branching and actions
