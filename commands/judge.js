@@ -18,21 +18,30 @@ module.exports = {
                 message.channel.send("Something went wrong " + err)
             } else {
                 let jsonJudge = JSON.parse(res.body)
-                console.log(jsonJudge)
 
                 let statsJ = ""
+                try {
 
-                let total_verdicts =            "\nTotal Verdicts : "+jsonJudge.payload.total_verdicts
-                let total_cases_closed =        "\nTotal Cases Closed : "+jsonJudge.payload.total_cases_closed
-                let total_punishments =         "\nTotal Punishments "+jsonJudge.payload.total_punishments
+                    let total_verdicts =            "\nTotal Verdicts : "+jsonJudge.payload.total_verdicts
+                    let total_cases_closed =        "\nTotal Cases Closed : "+jsonJudge.payload.total_cases_closed
+                    let total_punishments =         "\nTotal Punishments "+jsonJudge.payload.total_punishments
 
-                let perCalcJ =                  jsonJudge.payload.total_punishments / jsonJudge.payload.total_cases_closed * 100;
-                let percentageJ =               "\nPercentage of Punished  "+perCalcJ.toFixed(2)+"%"
+                    let perCalcJ =                  jsonJudge.payload.total_punishments / jsonJudge.payload.total_cases_closed * 100;
+                    let percentageJ =               "\nPercentage of Punished  "+perCalcJ.toFixed(2)+"%"
 
-                statsJ = "\`\`\`" + total_verdicts + total_cases_closed + total_punishments + percentageJ +  "\`\`\`"
+                    statsJ = "\`\`\`" + total_verdicts + total_cases_closed + total_punishments + percentageJ +  "\`\`\`"
 
+                    message.channel.send("Stats of justice from \`The Justice Department\`:" +statsJ)
+                } catch (e) {
+                    console.log(e)
+                    message.channel.send(`<@355265732940136448> There has been a mistake. Ensure the token is valid and there aren't breaking things. Here the log:`)
+                    let err = ''
+                    Object.keys(jsonJudge).map(k => {
+                        err += jsonJudge + ':' +  jsonJudge[k] + '\n'
+                    })
+                    message.channel.send('\`\`\`' + err + '\`\`\`')
+                }
 
-                message.channel.send("Stats of justice from \`The Justice Department\`:" +statsJ)
             }
         });
 
@@ -65,20 +74,33 @@ module.exports = {
                                 } else {
                                     let jsonJudgeStats = JSON.parse(response_justice.body)
 
-                                    let stats = ""
+                                    try {
+                                        console.log(1)
+                                        console.log(jsonJudgeStats)
 
-                                    let total_verdicts =      "\nTotal Verdicts : "+jsonJudgeStats.payload.total_verdicts
-                                    let total_cases_closed =  "\nTotal Cases Closed : "+jsonJudgeStats.payload.total_cases_closed
-                                    let total_good_verdicts = "\nTotal Good Verdicts "+jsonJudgeStats.payload.total_good_verdicts
-                                    let total_bad_verdicts =  "\nTotal Bad Verdicts "+jsonJudgeStats.payload.total_bad_verdicts
+                                        let stats = ""
 
-                                    let perCalc = jsonJudgeStats.payload.total_good_verdicts / jsonJudgeStats.payload.total_cases_closed * 100;
-                                    let percentage =          "\nPercentage of Good Verdicts "+perCalc.toFixed(2)+"%"
+                                        let total_verdicts =      "\nTotal Verdicts : "+jsonJudgeStats.payload.total_verdicts
+                                        let total_cases_closed =  "\nTotal Cases Closed : "+jsonJudgeStats.payload.total_cases_closed
+                                        let total_good_verdicts = "\nTotal Good Verdicts "+jsonJudgeStats.payload.total_good_verdicts
+                                        let total_bad_verdicts =  "\nTotal Bad Verdicts "+jsonJudgeStats.payload.total_bad_verdicts
+
+                                        let perCalc = jsonJudgeStats.payload.total_good_verdicts / jsonJudgeStats.payload.total_cases_closed * 100;
+                                        let percentage =          "\nPercentage of Good Verdicts "+perCalc.toFixed(2)+"%"
 
 
-                                    stats = "\`\`\`" + total_verdicts + total_cases_closed + total_good_verdicts + total_bad_verdicts + percentage + "\`\`\`"
+                                        stats = "\`\`\`" + total_verdicts + total_cases_closed + total_good_verdicts + total_bad_verdicts + percentage + "\`\`\`"
 
-                                    message.channel.send("Justice stats from \`"+judge+"\`:" +stats)
+                                        message.channel.send("Justice stats from \`"+judge+"\`:" +stats)
+                                    } catch (e) {
+                                        console.log(e)
+                                        message.channel.send(`<@355265732940136448> There has been a mistake. Ensure the token is valid and there aren't breaking things. Here the log:`)
+                                        let err = ''
+                                        Object.keys(jsonJudgeStats).map(jsonJudgeStat => {
+                                            err += jsonJudgeStat + ':' +  jsonJudgeStats[jsonJudgeStat] + '\n'
+                                        })
+                                        message.channel.send('\`\`\`' + err + '\`\`\`')
+                                    }
                                 }
                             });
                         }
@@ -108,20 +130,31 @@ module.exports = {
                             } else {
                                 let jsonJudgeStats = JSON.parse(response_justice.body)
 
-                                let stats = ""
-
-                                let total_verdicts =      "\nTotal Verdicts : "+jsonJudgeStats.payload.total_verdicts
-                                let total_cases_closed =  "\nTotal Cases Closed : "+jsonJudgeStats.payload.total_cases_closed
-                                let total_good_verdicts = "\nTotal Good Verdicts "+jsonJudgeStats.payload.total_good_verdicts
-                                let total_bad_verdicts =  "\nTotal Bad Verdicts "+jsonJudgeStats.payload.total_bad_verdicts
-
-                                let perCalc = jsonJudgeStats.payload.total_good_verdicts / jsonJudgeStats.payload.total_cases_closed * 100;
-                                let percentage = "\nPercentage of Good Verdicts "+perCalc.toFixed(2)+"%"
+                                try {
+                                    let stats = ""
 
 
-                                stats = "\`\`\`" + total_verdicts + total_cases_closed + total_good_verdicts + total_bad_verdicts + percentage + "\`\`\`"
+                                    let total_verdicts =      "\nTotal Verdicts : "+jsonJudgeStats.payload.total_verdicts
+                                    let total_cases_closed =  "\nTotal Cases Closed : "+jsonJudgeStats.payload.total_cases_closed
+                                    let total_good_verdicts = "\nTotal Good Verdicts "+jsonJudgeStats.payload.total_good_verdicts
+                                    let total_bad_verdicts =  "\nTotal Bad Verdicts "+jsonJudgeStats.payload.total_bad_verdicts
 
-                                message.channel.send("Stats of justice from \`"+args[0]+"\`:" +stats)
+                                    let perCalc = jsonJudgeStats.payload.total_good_verdicts / jsonJudgeStats.payload.total_cases_closed * 100;
+                                    let percentage = "\nPercentage of Good Verdicts "+perCalc.toFixed(2)+"%"
+
+
+                                    stats = "\`\`\`" + total_verdicts + total_cases_closed + total_good_verdicts + total_bad_verdicts + percentage + "\`\`\`"
+
+                                    message.channel.send("Stats of justice from \`"+args[0]+"\`:" +stats)
+                                } catch (e) {
+                                    console.log(e)
+                                    message.channel.send(`<@355265732940136448> There has been a mistake. Ensure the token is valid and there aren't breaking things. Here the log:`)
+                                    let err = ''
+                                    Object.keys(jsonJudgeStats).map(jsonJudgeStat => {
+                                        err += jsonJudgeStat + ':' +  jsonJudgeStats[jsonJudgeStat] + '\n'
+                                    })
+                                    message.channel.send('\`\`\`' + err + '\`\`\`')
+                                }
                             }
                         });
                     }
