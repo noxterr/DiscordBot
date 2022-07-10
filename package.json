@@ -7,7 +7,7 @@
   "description": "CuriS and noxter's bot for Purple Lambda Discord",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --verbose --coverage",
     "start": "nodemon index.js"
   },
   "repository": {
@@ -33,7 +33,7 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "fs": "^0.0.1-security",
-    "mongoose": "^5.13.7",
+    "jest": "^28.1.2",
     "mysql": "^2.18.1",
     "node-fetch": "^2.6.1",
     "nodemon": "^2.0.16",
