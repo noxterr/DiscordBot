@@ -180,6 +180,9 @@ client.on('messageCreate', message =>{
             case 'ban':
                 client.commands.get(command).execute(message, args)
                 break;
+            case 'uuid':
+                client.commands.get(command).execute(message, args)
+                break;
             }
     }
 
