@@ -11,3 +11,4 @@ index.js
 package-lock.json
 /node_modules
 /commands/savejudgestats.js
+/old

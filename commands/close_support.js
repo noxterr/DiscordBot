@@ -2,13 +2,7 @@ module.exports = {
     name: 'close_support',
     description: 'command that closes support for a user',
     execute(message, args) {
-        console.log('asked to remove support here')
-
         if (!args[0]) message.reply("Please put a valid player.")
-
-        console.log('welcome')
-
-        console.log("player " + args[0])
 
         let user_id = message.author.id
 
@@ -17,12 +11,9 @@ module.exports = {
         const member = guild.members.cache.get(user_id)
 
         var role = message.guild.roles.cache.find(role => role.name === "Support needed");
-        console.log(role)
-        console.log('welcome')
+
         member.roles.remove(role)
 
-        //setTimeout(() => message.delete(), 1500)
-        
         return message.channel.send(`Support request closed for: ${args[0]}`)
     }
 }
