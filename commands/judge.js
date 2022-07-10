@@ -61,7 +61,6 @@ module.exports = {
                             message.channel.send("Something went wrong " + err)
                         } else {
                             let jsonMatches = JSON.parse(response_api_def.body)
-                            console.log(jsonMatches)
                             request({
                                 url: `https://api.faceit.com/judge/v1/judges/${jsonMatches.player_id}/stats`,
                                 headers: {
@@ -75,8 +74,6 @@ module.exports = {
                                     let jsonJudgeStats = JSON.parse(response_justice.body)
 
                                     try {
-                                        console.log(1)
-                                        console.log(jsonJudgeStats)
 
                                         let stats = ""
 
