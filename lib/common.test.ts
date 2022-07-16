@@ -1,5 +1,5 @@
-const common = require('./../lib/common')
-
+const common = require('./common')
+export {}
 test('The fetch fails with an error due to missing the parameter', async () => {
     const data = await common.getGuidFromName();
     expect(data).toBe('Name result undefined or not passed');
