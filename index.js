@@ -6,6 +6,7 @@ const fs = require('fs');
 client.commands = new Discord.Collection();
 const fetch = require('node-fetch')
 require('dotenv').config();
+const common = require('./lib/common')
 
 const commandFile = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'))
 for(const file of commandFile){
@@ -84,21 +85,21 @@ client.once('ready' , () => {
 client.on('messageCreate', message =>{
     if(!message.content.startsWith(prefix) || message.author.bot) return;
 
+    // Getting the arguments of the command
     const args = message.content.slice(prefix.length).split(" ")
+
+    // Getting the name of the command
     const command = args.shift().toLowerCase()
 
+    // Setting up role permission
     let leverage = 0
-
     if(message.member.roles.cache.some(r => r.name === 'Administrator') || message.member.roles.cache.some(r => r.name === 'ADMIN')){
-        //an admin has availability of all commands -> level 5
-        leverage = 5
+        leverage = 3
     }else if(message.member.roles.cache.some(r => r.name === '@everyone')){
         leverage = 1
     }else if(message.member.roles.cache.some(r => r.name === 'Moderator')){
-        leverage = 3
+        leverage = 2
     }
-
-    //console.log(client)
 
 
     if(args[0] != null){
@@ -107,113 +108,14 @@ client.on('messageCreate', message =>{
         client.channels.cache.get('885199141037305916').send("\`-"+command + "\` has been typed into a channel from `" + `${message.member.user.username}` +"`")// need to tag on logs? `<@${message.member.user.id}>`
     }
 
-    if(leverage >= 1){ //anything else
-        switch (command){
-            case 'support':
-                //client.channels.cache.get('885199141037305916')
-                client.channels.cache.get('877980154910081075').send(client.commands.get(command).execute(message, args))
-                break;
-            case 'authlink':
-                //client.channels.cache.get('885199141037305916')
-                client.commands.get(command).execute(message, args)
-                break;
-            case 'auth':
-                //client.channels.cache.get('885199141037305916')
-                //setTimeout(() => message.delete(), 1250)
-                client.commands.get(command).execute(message, args)
-                break;
-            case 'tocapri':
-                client.commands.get(command).execute(message, args)
-                break;
-        }
+    const res = common.isUserAllowed(command, leverage)
+
+    if (res.errcode == 0) {
+        client.commands.get(command).execute(message, args)
+    } else {
+        message.reply(res.message)
     }
-
-    if(leverage >= 3){ //moderator level
-        //console.log('admin + mod')
-        switch (command){
-            case 'close_support':
-                client.commands.get(command).execute(message, args)
-                break;
-            case 'mute':
-                client.commands.get(command).execute(message, args)
-                break;
-            case 'auth':
-                client.commands.get(command).execute(message, args)
-                break;
-        }
-    }
-
-    if(leverage >= 5){ //admin level
-        //console.log('admin only')
-        switch (command){
-            case 'judge':
-                client.commands.get(command).execute(message, args)
-            break;
-            case 'date':
-                client.commands.get(command).execute(message, args)
-                break;
-            case 'clear':
-                client.commands.get(command).execute(message, args)
-                break;
-            case 'help':
-                client.commands.get(command).execute(message, args)
-                break;
-            case 'player':
-                client.commands.get(command).execute(message, args)
-                break;
-            case 'hubplayer':
-                client.commands.get(command).execute(message, args)
-                break;
-            case 'todo':
-                client.commands.get(command).execute(message, args)
-                break;
-            case 'update':
-                client.commands.get(command).execute(message, args)
-                break
-            case 'judgeontime':
-                client.commands.get(command).execute(message, args)
-                break
-            case 'http':
-                client.commands.get(command).execute(message, args)
-                //list.members.cache.forEach(member => console.log(member.user.username));
-                break
-            case 'ban':
-                client.commands.get(command).execute(message, args)
-                break;
-            case 'uuid':
-                client.commands.get(command).execute(message, args)
-                break;
-            }
-    }
-
-
 })
-
-client.on('messageCreate', gotMessage);
-
-function gotMessage(msg) {
-    switch(msg.content){
-        case 'I am amazing':
-        case 'I am huge':
-        case 'I am a god':
-        case 'I am professional':
-        case 'I am insane':
-            msg.reply('You are💖');
-            break;
-        case 'me good':
-            const ayy = client.emojis.cache.find(emoji => emoji.name === "pog");
-            msg.reply(`${ayy}`);
-            break;
-        case 'me bad':
-            const crycat = client.emojis.cache.find(emoji => emoji.name === "crycat");
-            msg.reply(`${crycat}`);
-            break;
-        case 'I did it':
-            const poggers = client.emojis.cache.find(emoji => emoji.name === "poggers");
-            msg.reply(`${poggers}`);
-            break;
-    }
-}
 
 // LAMBDA-TOKEN
 client.login(process.env.LAMBDA_TOKEN); //process.env.LAMBDA_TOKEN
