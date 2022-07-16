@@ -92,24 +92,19 @@ client.on('messageCreate', message =>{
     const command = args.shift().toLowerCase()
 
     // Setting up role permission
-    let leverage = 0
-    if(message.member.roles.cache.some(r => r.name === 'Administrator') || message.member.roles.cache.some(r => r.name === 'ADMIN')){
-        leverage = 3
-    }else if(message.member.roles.cache.some(r => r.name === '@everyone')){
-        leverage = 1
-    }else if(message.member.roles.cache.some(r => r.name === 'Moderator')){
-        leverage = 2
-    }
+    const roleLevel = common.getUserLeverage(message)
+    const leverage = roleLevel ? roleLevel : 1
 
+    // Saving the logs
+    common.sendLogs({
+        client,
+        args,
+        message,
+        command
+    })
 
-    if(args[0] != null){
-        client.channels.cache.get('885199141037305916').send("\`-"+command + " " + args[0] + "\` has been typed into a channel from `" + `${message.member.user.username}`+"`") // need to tag on logs? `<@${message.member.user.id}>`
-    }else{
-        client.channels.cache.get('885199141037305916').send("\`-"+command + "\` has been typed into a channel from `" + `${message.member.user.username}` +"`")// need to tag on logs? `<@${message.member.user.id}>`
-    }
-
+    // Seding the actuaal command
     const res = common.isUserAllowed(command, leverage)
-
     if (res.errcode == 0) {
         client.commands.get(command).execute(message, args)
     } else {
