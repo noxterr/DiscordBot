@@ -8,7 +8,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --verbose --coverage",
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "typescript-start": "nodemon index.ts"
   },
   "repository": {
     "type": "git",
@@ -31,12 +32,17 @@
     "axios": "^0.27.2",
     "discord.js": "^13.0.1",
     "dotenv": "^10.0.0",
-    "express": "^4.17.1",
     "fs": "^0.0.1-security",
     "jest": "^28.1.2",
-    "mysql": "^2.18.1",
-    "node-fetch": "^2.6.1",
     "nodemon": "^2.0.16",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.7.4"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.18.6",
+    "@babel/preset-typescript": "^7.18.6",
+    "@types/jest": "^28.1.6",
+    "ts-jest": "^28.0.6"
   }
 }
