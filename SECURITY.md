@@ -3,10 +3,11 @@
 ## Supported Versions
 
 
-| Version | Supported          |
-| ------- | ------------------ |
-| prod    | :white_check_mark: |
-| dev     | :x:                |
+| Version           | Supported          |
+| ------------------|------------------- |
+| prod              | :white_check_mark: |
+| @beta-1.0.0       | :white_check_mark: |
+| dev               | :x:                |
 
 ## Reporting a Vulnerability
 

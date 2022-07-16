@@ -17,6 +17,9 @@ module.exports = {
                 console.error(err);
                 message.channel.send("Something went wrong " + err)
             } else {
+                if (res.body == 'Authentication failed') {
+                    return message.channel.send('There has been a mistake:  ' + response_api_def.body)
+                }
                 let jsonJudge = JSON.parse(res.body)
 
                 let statsJ = ""
@@ -60,6 +63,9 @@ module.exports = {
                             console.error(err);
                             message.channel.send("Something went wrong " + err)
                         } else {
+                            if (response_api_def.body == 'Authentication failed') {
+                                return message.channel.send('There has been a mistake:  ' + response_api_def.body)
+                            }
                             let jsonMatches = JSON.parse(response_api_def.body)
                             request({
                                 url: `https://api.faceit.com/judge/v1/judges/${jsonMatches.player_id}/stats`,
@@ -114,6 +120,9 @@ module.exports = {
                         console.error(err);
                         message.channel.send("Something went wrong " + err)
                     } else {
+                        if (response_api_def.body == 'Authentication failed') {
+                            return message.channel.send('There has been a mistake:  ' + response_api_def.body)
+                        }
                         let jsonMatches = JSON.parse(response_api_def.body)
                         request({
                             url: `https://api.faceit.com/judge/v1/judges/${jsonMatches.player_id}/stats`,

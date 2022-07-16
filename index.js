@@ -106,7 +106,12 @@ client.on('messageCreate', message =>{
     // Seding the actuaal command
     const res = common.isUserAllowed(command, leverage)
     if (res.errcode == 0) {
-        client.commands.get(command).execute(message, args)
+        try {
+            client.commands.get(command).execute(message, args)
+        } catch (e) {
+            console.error(e)
+            message.reply('There has been an error. If the problem persists please contact the administrator')
+        }
     } else {
         message.reply(res.message)
     }
